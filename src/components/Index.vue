@@ -2,10 +2,12 @@
   <div>
     <b-tabs v-model="activeTab">
       <b-tab-item label="Card">
-        <IndexCard />
+        <a href="" v-for="game in scoreboardData.games" :key="game.gameId">
+          <IndexCard :gameData="game"/>
+        </a>
       </b-tab-item>
       <b-tab-item label="Table">
-        <IndexTable />
+        <IndexTable :gamesData="game"/>
       </b-tab-item>
     </b-tabs>
   </div>
@@ -24,15 +26,12 @@ export default {
   },
   data () {
     return  {
-      scoreboardData: {}
+      scoreboardData: {},
+      activeTab: 0,
+      numberOfGames: null
     }
   },
   computed: {
-    dateToday () {
-      let date = Date()
-      let formattedDate = date.getDate() + (date.getMonth() + 1) + date.getFullYear()
-      return formattedDate
-    }
   },
   mounted () {
     this.scoreboardDataFetch(url)
@@ -40,8 +39,8 @@ export default {
   methods: {
     requestApi (url) {
       axios.get(url)
-      .then(data => {
-        return data
+      .then((response) => {
+        return (response)
       })
     },
     apendPlusMinus (someStat) {
@@ -51,11 +50,9 @@ export default {
         } return someStat
       } return someStat
     },
-    checkYesterdayLastGame () {
-      
-    },
     scoreboardDataFetch (url) {
       this.scoreboardData = this.requestApi(url)
+      this.numberOfGames = this.scoreboardData.numGames
       return this.scoreboardData
     }
   }
