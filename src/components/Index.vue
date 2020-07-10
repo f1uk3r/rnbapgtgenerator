@@ -27,7 +27,7 @@ export default {
   },
   data () {
     return  {
-      scoreboardData: {},
+      scoreboardData: null,
       activeTab: 0,
       numberOfGames: null,
       url: "http://data.nba.net/prod/v1/" + this.$store.getters.dateToday + '/scoreboard.json'
@@ -42,14 +42,11 @@ export default {
   },
   mounted () {
     this.$store.dispatch('initialiseDates')
+    axios.get(this.url).then((response) => {
+      this.scoreboardData = response.data
+    })
   },
   methods: {
-    requestApi (url) {
-      axios.get(url)
-      .then((response) => {
-        return (response)
-      })
-    },
     apendPlusMinus (someStat) {
       if (/^\d+$/.test(someStat)) {
         if (parseInt(someStat) > 0) {

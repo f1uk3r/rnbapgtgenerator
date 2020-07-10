@@ -6,7 +6,7 @@
 export default {
   name: 'IndexTable',
   props: {
-    gamesData: Object
+    gamesData: Array
   }
 }
 </script>

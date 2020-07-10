@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+//import axios from 'axios'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -275,7 +275,7 @@ export const store = new Vuex.Store({
   actions: {
     initialiseDates (context) {
       context.commit('setDates')
-    },
+    }/*,
     checkYesterdayLastGameEnd (context) {
       axios.get("http://data.nba.net/prod/v1/" + this.state.dateYesterday + '/scoreboard.json')
         .then((response) => {
@@ -293,6 +293,6 @@ export const store = new Vuex.Store({
             context.commit('setTodayGameEnd')
           }
         })
-    }
+    }*/
   }
 })
