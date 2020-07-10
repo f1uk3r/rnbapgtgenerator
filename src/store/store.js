@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios';
 
 Vue.use(Vuex);
 
@@ -246,6 +247,46 @@ const store = new Vuex.Store({
         "1610612764",
         "was"
       ],
+    },
+    dateYesterday: '',
+    dateToday: '',
+    yesterdayLastGameEnd: false,
+    todayLastGameEnd: false
+  },
+  mutations: {
+    setYesterdayLastGameEnd (state) {
+      state.yesterdayLastGameEnd = true
+    },
+    setTodayGameEnd (state) {
+      state.todayLastGameEnd = true
+    },
+    setDates (state) {
+      let date = new Date()
+      state.dateToday = date.getDate() + (date.getMonth() + 1) + date.getFullYear()
+      state.dateYesterday = (date.getDate() - 1) + (date.getMonth() + 1) + date.getFullYear()
+    }
+  },
+  actions: {
+    initialiseDates (context) {
+      context.commit('setDates')
+    },
+    checkYesterdayLastGameEnd (context) {
+      axios.get(this.state.dateYesterday + '/scoreboard.json')
+        .then((response) => {
+          let lastGameSummaryData = response.games[response.numGames - 1]
+          if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== basicGameData.hTeam.score)) {
+            context.commit('setYesterdayGameEnd')
+          }
+        })
+    },
+    checkTodayLastGameEnd (context) {
+      axios.get(this.state.dateToday + '/scoreboard.json')
+        .then((response) => {
+          let lastGameSummaryData = response.games[response.numGames - 1]
+          if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== basicGameData.hTeam.score)) {
+            context.commit('setTodayGameEnd')
+          }
+        })
     }
   }
 })
