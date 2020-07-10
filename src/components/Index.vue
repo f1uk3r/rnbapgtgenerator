@@ -7,7 +7,7 @@
         </a>
       </b-tab-item>
       <b-tab-item label="Table">
-        <IndexTable :gamesData="game"/>
+        <IndexTable :gamesData="scoreboardData.games"/>
       </b-tab-item>
     </b-tabs>
   </div>
@@ -15,8 +15,9 @@
 
 <script>
 import axios from 'axios'
-import IndexCard from './IndexCard'
-import IndexTable from './IndexTable'
+import IndexCard from './IndexCard.vue'
+import IndexTable from './IndexTable.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Index',
@@ -28,13 +29,19 @@ export default {
     return  {
       scoreboardData: {},
       activeTab: 0,
-      numberOfGames: null
+      numberOfGames: null,
+      url: "http://data.nba.net/prod/v1/" + this.$store.getters.dateToday + '/scoreboard.json'
     }
   },
   computed: {
+    ...mapGetters([
+      'dateToday',
+      'teamsData',
+      'dateYesterday',
+    ])
   },
   mounted () {
-    this.scoreboardDataFetch(url)
+    this.$store.dispatch('initialiseDates')
   },
   methods: {
     requestApi (url) {

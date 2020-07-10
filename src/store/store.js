@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios';
+import axios from 'axios'
+Vue.use(Vuex)
 
-Vue.use(Vuex);
-
-const store = new Vuex.Store({
+export const store = new Vuex.Store({
   state: {
     teamsData: {
       "ATL": [
@@ -249,9 +248,16 @@ const store = new Vuex.Store({
       ],
     },
     dateYesterday: '',
-    dateToday: '',
+    dateToday: '20200110',
     yesterdayLastGameEnd: false,
     todayLastGameEnd: false
+  },
+  getters: {
+    teamsData: state => state.teamsData,
+    dateYesterday: state => state.dateYesterday,
+    dateToday: state => state.dateToday,
+    yesterdayLastGameEnd: state => state.yesterdayLastGameEnd,
+    todayLastGameEnd: state => state.todayLastGameEnd
   },
   mutations: {
     setYesterdayLastGameEnd (state) {
@@ -262,8 +268,8 @@ const store = new Vuex.Store({
     },
     setDates (state) {
       let date = new Date()
-      state.dateToday = date.getDate() + (date.getMonth() + 1) + date.getFullYear()
-      state.dateYesterday = (date.getDate() - 1) + (date.getMonth() + 1) + date.getFullYear()
+      state.dateToday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + date.getDate()).slice(-2)
+      state.dateYesterday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + (date.getDate() - 1)).slice(-2)
     }
   },
   actions: {
@@ -271,7 +277,7 @@ const store = new Vuex.Store({
       context.commit('setDates')
     },
     checkYesterdayLastGameEnd (context) {
-      axios.get(this.state.dateYesterday + '/scoreboard.json')
+      axios.get("http://data.nba.net/prod/v1/" + this.state.dateYesterday + '/scoreboard.json')
         .then((response) => {
           let lastGameSummaryData = response.games[response.numGames - 1]
           if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== basicGameData.hTeam.score)) {
