@@ -250,14 +250,18 @@ export const store = new Vuex.Store({
     dateYesterday: '',
     dateToday: '20200110',
     yesterdayLastGameEnd: false,
-    todayLastGameEnd: false
+    todayLastGameEnd: false,
+    baseUrl: 'http://data.nba.net/prod/v1/',
+    scoreboardSuffix: '/scoreboard.json'
   },
   getters: {
     teamsData: state => state.teamsData,
     dateYesterday: state => state.dateYesterday,
     dateToday: state => state.dateToday,
     yesterdayLastGameEnd: state => state.yesterdayLastGameEnd,
-    todayLastGameEnd: state => state.todayLastGameEnd
+    todayLastGameEnd: state => state.todayLastGameEnd,
+    baseUrl: state => state.baseUrl,
+    scoreboardSuffix: state => state.scoreboardSuffix
   },
   mutations: {
     setYesterdayLastGameEnd (state) {
