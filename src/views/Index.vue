@@ -2,9 +2,9 @@
   <div>
     <b-tabs v-model="activeTab">
       <b-tab-item label="Card">
-        <a href="" v-for="game in scoreboardData.games" :key="game.gameId">
-          <IndexCard :gameData="game"/>
-        </a>
+        <template v-for="game in scoreboardData.games">
+          <IndexCard :key="game.gameId" :gameData="game" @click="goToGenerator(game)" />
+        </template>
       </b-tab-item>
       <b-tab-item label="Table">
         <IndexTable :gamesData="scoreboardData.games"/>
@@ -15,8 +15,8 @@
 
 <script>
 import axios from 'axios'
-import IndexCard from './IndexCard.vue'
-import IndexTable from './IndexTable.vue'
+import IndexCard from '../components/IndexCard.vue'
+import IndexTable from '../components/IndexTable.vue'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -29,8 +29,7 @@ export default {
     return  {
       scoreboardData: null,
       activeTab: 0,
-      numberOfGames: null,
-      url: "http://data.nba.net/prod/v1/" + this.$store.getters.dateToday + '/scoreboard.json'
+      url: this.$store.getters.baseUrl + this.$store.getters.dateToday + this.$store.getters.scoreboardSuffix
     }
   },
   computed: {
@@ -54,10 +53,8 @@ export default {
         } return someStat
       } return someStat
     },
-    scoreboardDataFetch (url) {
-      this.scoreboardData = this.requestApi(url)
-      this.numberOfGames = this.scoreboardData.numGames
-      return this.scoreboardData
+    goToGenerator (gameData) {
+      this.$router.push({ path: '/games', name: 'games', params: { id: gameData.gameId } })
     }
   }
 }

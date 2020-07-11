@@ -1,30 +1,30 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Index from '../components/Index'
-import Game from '../components/Game'
-
+import Home from '../views/Index.vue'
+//import axios from 'axios'
 
 Vue.use(VueRouter)
 
+  const routes = [
+  {
+    path: '/',
+    name: 'Index',
+    component: Home
+  },
+  {
+    path: '/games/:id',
+    name: 'Games',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Game.vue')
+  }
+]
+
 const router = new VueRouter({
   mode: 'history',
-  base: __dirname,
-  routes: [
-    {
-      path: '/',
-      component: Index,
-      meta: {
-        title: 'Post Game Thread generator for r/nba'
-      }
-    },
-    {
-      path: 'game/:id',
-      component: Game,
-      meta: {
-        title: 'Post Game Thread'
-      }
-    }
-  ]
+  base: process.env.BASE_URL,
+  routes
 })
 
 export default router

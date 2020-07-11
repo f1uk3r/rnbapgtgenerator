@@ -5,6 +5,7 @@ import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 import axios from 'axios'
 import { store } from './store/store.js'
+import router from './router'
 
 Vue.config.productionTip = false
 Vue.use(Buefy)
@@ -13,5 +14,6 @@ Vue.use(Vuex)
 
 new Vue({
   render: h => h(App),
-  store: store,
+  router,
+  store: store
 }).$mount('#app')
