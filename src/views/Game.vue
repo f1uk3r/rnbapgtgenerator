@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Hello</h1>
     <GameBar :gamesData="scoreboardData.games"></GameBar>
     <GameTable :gameData="currentGameData"></GameTable>
     <GameTableReddit :gameData="currentGameData"></GameTableReddit>

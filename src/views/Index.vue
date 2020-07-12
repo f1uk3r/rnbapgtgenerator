@@ -2,9 +2,9 @@
   <div>
     <b-tabs v-model="activeTab">
       <b-tab-item label="Card">
-        <template v-for="game in scoreboardData.games">
-          <IndexCard :key="game.gameId" :gameData="game" @click="goToGenerator(game)" />
-        </template>
+        <router-link :to="{ name: 'Games', params: { id: game.gameId }}" v-for="game in scoreboardData.games" :key="game.gameId" >
+          <IndexCard :gameData="game" @click="goToGenerator(game)" />
+        </router-link>
       </b-tab-item>
       <b-tab-item label="Table">
         <IndexTable :gamesData="scoreboardData.games"/>
