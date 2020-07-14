@@ -8,7 +8,7 @@
     >
       <div class="p-1">
         <router-link :to="{ name: 'Games', params: { id: game.gameId }}" v-for="game in gamesData" :key="game.gameId" >
-          <IndexCard :gameData="game" @click="goToGenerator(game)" />
+          <IndexCard :gameData="game" />
         </router-link>
       </div>
     </b-sidebar>

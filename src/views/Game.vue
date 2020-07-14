@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>Hello</h1>
     <GameBar :gamesData="scoreboardData.games"></GameBar>
+
     <GameTable :gameData="currentGameData"></GameTable>
-    <GameTableReddit :gameData="currentGameData"></GameTableReddit>
+    <!--<GameTableReddit :gameData="currentGameData"></GameTableReddit>-->
   </div>
 </template>
 
@@ -11,27 +11,39 @@
 import axios from 'axios'
 import GameBar from '../components/GameBar.vue'
 import GameTable from '../components/GameTable.vue'
-import GameTableReddit from '../components/GameTableReddit.vue'
+/*import GameTableReddit from '../components/GameTableReddit.vue'*/
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Game',
   components: {
     GameBar,
     GameTable,
-    GameTableReddit
+    /*GameTableReddit*/
   },
   data () {
     return {
       currentGameData: null,
       scoreboardData: null,
       url: this.$store.getters.baseUrl + this.$store.getters.dateToday + this.$store.getters.scoreboardSuffix,
-      gameUrlSuffix: this.$store.getters.baseUrl + this.$store.getters.dateToday + '/' + this.$route.param.id + "_boxscore.json"
+      gameUrl: this.$store.getters.baseUrl + this.$store.getters.dateToday + '/' + this.$route.params.id + "_boxscore.json"
     }
   },
+  computed: {
+    ...mapGetters([
+      'dateToday',
+      'teamsData',
+      'baseUrl',
+      'scoreboardSuffix'
+    ])
+  },
   mounted () {
-    this.$store.dispatch('initialiseDates')
+    //this.$store.dispatch('initialiseDates')
     axios.get(this.url).then((response) => {
       this.scoreboardData = response.data
+    })
+    axios.get(this.gameUrl).then((response) => {
+      this.currentGameData = response.data
     })
   },
   methods: {
