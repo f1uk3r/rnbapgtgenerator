@@ -1,25 +1,30 @@
 <template>
-  <div>
-    <GameBar :gamesData="scoreboardData.games"></GameBar>
-
-    <GameTable :gameData="currentGameData"></GameTable>
-    <!--<GameTableReddit :gameData="currentGameData"></GameTableReddit>-->
+  <div class="sidebar-page">
+    <section class="sidebar-layout">
+      <GameBar :gamesData="scoreboardData.games"></GameBar>
+      <div>
+        <figure class="image is5by5" :id="hTeamLogo"></figure>
+        <figure class="image is5by5" :id="vTeamLogo"></figure>
+      </div>
+      <!--<GameTable :gameData="currentGameData"></GameTable>
+        <GameTableReddit :gameData="currentGameData"></GameTableReddit>-->
+    </section>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import GameBar from '../components/GameBar.vue'
-import GameTable from '../components/GameTable.vue'
-/*import GameTableReddit from '../components/GameTableReddit.vue'*/
+/*import GameTable from '../components/GameTable.vue'
+import GameTableReddit from '../components/GameTableReddit.vue'*/
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Game',
   components: {
     GameBar,
-    GameTable,
-    /*GameTableReddit*/
+    /*GameTable,
+    GameTableReddit*/
   },
   data () {
     return {
@@ -35,7 +40,13 @@ export default {
       'teamsData',
       'baseUrl',
       'scoreboardSuffix'
-    ])
+    ]),
+    hTeamLogo () {
+      return this.$store.getters.teamsData[this.currentGameData.basicGameData.hTeam.triCode][5]
+    },
+    vTeamLogo () {
+      return this.$store.getters.teamsData[this.currentGameData.basicGameData.vTeam.triCode][5]
+    }
   },
   mounted () {
     //this.$store.dispatch('initialiseDates')
@@ -58,3 +69,17 @@ export default {
 
 }
 </script>
+
+<style scoped>
+  .sidebar-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100%;
+  }
+  .sidebar-layout {
+    display: flex;
+    flex-direction: row;
+    min-height: 100%;
+  }
+</style>

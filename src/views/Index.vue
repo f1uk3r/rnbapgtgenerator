@@ -3,7 +3,7 @@
     <b-tabs v-model="activeTab">
       <b-tab-item label="Card">
         <router-link :to="{ name: 'Games', params: { id: game.gameId }}" v-for="game in scoreboardData.games" :key="game.gameId" >
-          <IndexCard :gameData="game" @click="goToGenerator(game)" />
+          <IndexCard :gameData="game" />
         </router-link>
       </b-tab-item>
       <b-tab-item label="Table">
@@ -52,9 +52,6 @@ export default {
           return "+" + someStat
         } return someStat
       } return someStat
-    },
-    goToGenerator (gameData) {
-      this.$router.push({ path: '/games', name: 'games', params: { id: gameData.gameId } })
     }
   }
 }
