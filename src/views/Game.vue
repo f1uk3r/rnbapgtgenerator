@@ -2,9 +2,12 @@
   <div class="sidebar-page">
     <section class="sidebar-layout">
       <GameBar :gamesData="scoreboardData.games"></GameBar>
-      <div>
-        <figure class="image is5by5" :id="hTeamLogo"></figure>
-        <figure class="image is5by5" :id="vTeamLogo"></figure>
+      <div class="container">
+        <b-field grouped position="is-centered">
+          <figure class="image is5by5" :id="hTeamLogo"></figure>
+          <p class="is-7">{{ currentGameData.basicGameData.hTeam.score }}-{{ currentGameData.basicGameData.vTeam.score }}</p>
+          <figure class="image is5by5" :id="vTeamLogo"></figure>
+        </b-field>
       </div>
       <!--<GameTable :gameData="currentGameData"></GameTable>
         <GameTableReddit :gameData="currentGameData"></GameTableReddit>-->
@@ -29,9 +32,7 @@ export default {
   data () {
     return {
       currentGameData: null,
-      scoreboardData: null,
-      url: this.$store.getters.baseUrl + this.$store.getters.dateToday + this.$store.getters.scoreboardSuffix,
-      gameUrl: this.$store.getters.baseUrl + this.$store.getters.dateToday + '/' + this.$route.params.id + "_boxscore.json"
+      scoreboardData: null
     }
   },
   computed: {
@@ -46,16 +47,20 @@ export default {
     },
     vTeamLogo () {
       return this.$store.getters.teamsData[this.currentGameData.basicGameData.vTeam.triCode][5]
+    },
+    getUrl () {
+      return this.$store.getters.baseUrl + this.$store.getters.dateToday + this.$store.getters.scoreboardSuffix
+    },
+    getGameUrl () {
+      return this.$store.getters.baseUrl + this.$store.getters.dateToday + '/' + this.$route.params.id + '_boxscore.json'
     }
   },
   mounted () {
-    //this.$store.dispatch('initialiseDates')
-    axios.get(this.url).then((response) => {
-      this.scoreboardData = response.data
-    })
-    axios.get(this.gameUrl).then((response) => {
-      this.currentGameData = response.data
-    })
+    this.$store.dispatch('initialiseDates')
+
+    this.getScoreboardData()
+
+    this.getCurrentGameData()
   },
   methods: {
     apendPlusMinus (someStat) {
@@ -64,7 +69,22 @@ export default {
           return "+" + someStat
         } return someStat
       } return someStat
+    },
+    getScoreboardData () {
+      axios.get(this.getUrl).then((response) => {
+        this.scoreboardData = response.data
+      })
+    },
+    getCurrentGameData () {
+      axios.get(this.getGameUrl).then((response) => {
+        this.currentGameData = response.data
+      })
     }
+  },
+  created () {
+    setInterval(() => {
+      this.getCurrentGameData()
+    }, 5000)
   }
 
 }

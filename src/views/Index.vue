@@ -28,8 +28,7 @@ export default {
   data () {
     return  {
       scoreboardData: null,
-      activeTab: 0,
-      url: this.$store.getters.baseUrl + this.$store.getters.dateToday + this.$store.getters.scoreboardSuffix
+      activeTab: 0
     }
   },
   computed: {
@@ -37,13 +36,15 @@ export default {
       'dateToday',
       'teamsData',
       'dateYesterday',
-    ])
+    ]),
+    getUrl () {
+      return this.$store.getters.baseUrl + this.$store.getters.dateToday + this.$store.getters.scoreboardSuffix
+    }
   },
   mounted () {
     this.$store.dispatch('initialiseDates')
-    axios.get(this.url).then((response) => {
-      this.scoreboardData = response.data
-    })
+
+    this.getScoreboardData()
   },
   methods: {
     apendPlusMinus (someStat) {
@@ -52,7 +53,17 @@ export default {
           return "+" + someStat
         } return someStat
       } return someStat
+    },
+    getScoreboardData () {
+      axios.get(this.getUrl).then((response) => {
+        this.scoreboardData = response.data
+      })
     }
+  },
+  created () {
+    setInterval(() => {
+      this.getScoreboardData()
+    }, 5000)
   }
 }
 </script>
