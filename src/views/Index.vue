@@ -36,6 +36,7 @@ export default {
       'dateToday',
       'teamsData',
       'dateYesterday',
+      'yesterdayLastGameEnd'
     ]),
     getUrl () {
       return this.$store.getters.baseUrl + this.$store.getters.dateToday + this.$store.getters.scoreboardSuffix
@@ -43,6 +44,12 @@ export default {
   },
   mounted () {
     this.$store.dispatch('initialiseDates')
+
+    this.$store.dispatch('checkYesterdayLastGameEnd')
+
+    if (!this.$store.getters.yesterdayLastGameEnd) {
+      this.$store.dispatch('initialiseDatesWhenYesterdayGameNotOver')
+    }
 
     this.getScoreboardData()
   },

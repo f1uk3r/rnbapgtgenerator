@@ -7,7 +7,7 @@
           <p class="is-7">({{ gameData.hTeam.win }}-{{ gameData.hTeam.loss }})</p>
         </div>
         <div class="media-content">
-          <p class="title is-5">{{ gameData.hTeam.score }} - {{ gameData.vTeam.score }}</p>
+          <p class="title is-6">{{ gameData.hTeam.score }} - {{ gameData.vTeam.score }}</p>
           <p class="subtitle is-6" v-if="gameData.period.current>1 & gameData.clock!==''">{{  gameData.clock  }}</p>
           <p class="subtitle is-6" v-else-if="gameData.period.current===1 && gameData.clock!==''">{{  gameData.clock  }}</p>
           <p class="subtitle is-6" v-else-if="gameData.period.current===1 && gameData.clock===''">{{  gameData.startTimeEastern  }}</p>

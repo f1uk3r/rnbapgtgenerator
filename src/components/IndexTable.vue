@@ -47,11 +47,11 @@ export default {
           'home_team': this.$store.getters.teamsData[this.gamesData[i].hTeam.triCode][0],
           'away_team': this.$store.getters.teamsData[this.gamesData[i].vTeam.triCode][0],
           'score': this.gamesData[i].hTeam.score + " - " + this.gamesData[i].vTeam.score,
-          'clock': (this.gamesData[i].period.current===1 && this.gamesData[i].clock==='')
+          'clock': (this.gamesData[i].period.current===0)
             ? "PRE-GAME"
             : (this.gamesData[i].period.current>=4 && (this.gamesData[i].clock===''||this.gamesData[i].clock==='0.0') && (this.gamesData[i].hTeam.score !== this.gamesData[i].vTeam.score))
             ? "FINAL"
-            : this.gamesData[i].clock
+            : this.gamesData[i].clock + " " + this.gamesData[i].period.current + "Q"
         }
         listToReturn.push(dataToReturn)
       }

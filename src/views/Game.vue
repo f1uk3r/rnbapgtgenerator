@@ -9,7 +9,7 @@
           <figure class="image is5by5" :id="vTeamLogo"></figure>
         </b-field>
       </div>
-      <!--<GameTable :gameData="currentGameData"></GameTable>
+      <!--<GameTable :gameData="currentGameData.stats"></GameTable>
         <GameTableReddit :gameData="currentGameData"></GameTableReddit>-->
     </section>
   </div>
@@ -18,8 +18,8 @@
 <script>
 import axios from 'axios'
 import GameBar from '../components/GameBar.vue'
-/*import GameTable from '../components/GameTable.vue'
-import GameTableReddit from '../components/GameTableReddit.vue'*/
+//import GameTable from '../components/GameTable.vue'
+//import GameTableReddit from '../components/GameTableReddit.vue'
 import { mapGetters } from 'vuex'
 
 export default {
