@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-//import axios from 'axios'
+import axios from 'axios'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -248,7 +248,7 @@ export const store = new Vuex.Store({
       ],
     },
     dateYesterday: '',
-    dateToday: '20200110',
+    dateToday: '',
     yesterdayLastGameEnd: false,
     todayLastGameEnd: false,
     baseUrl: 'http://data.nba.net/prod/v1/',
@@ -274,29 +274,37 @@ export const store = new Vuex.Store({
       let date = new Date()
       state.dateToday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + date.getDate()).slice(-2)
       state.dateYesterday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + (date.getDate() - 1)).slice(-2)
+    },
+    setDatesWhenYesterdayGameNotOver (state) {
+      let date = new Date()
+      state.dateToday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + date.getDate() - 1).slice(-2)
+      state.dateYesterday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + (date.getDate() - 2)).slice(-2)
     }
   },
   actions: {
     initialiseDates (context) {
       context.commit('setDates')
-    }/*,
+    },
+    initialiseDatesWhenYesterdayGameNotOver (context) {
+      context.commit('setDatesWhenYesterdayGameNotOver')
+    },
     checkYesterdayLastGameEnd (context) {
-      axios.get("http://data.nba.net/prod/v1/" + this.state.dateYesterday + '/scoreboard.json')
+      axios.get(this.state.baseUrl + this.state.dateYesterday + this.state.scoreboardSuffix)
         .then((response) => {
           let lastGameSummaryData = response.games[response.numGames - 1]
-          if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== basicGameData.hTeam.score)) {
+          if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== lastGameSummaryData.basicGameData.hTeam.score)) {
             context.commit('setYesterdayGameEnd')
           }
         })
     },
     checkTodayLastGameEnd (context) {
-      axios.get(this.state.dateToday + '/scoreboard.json')
+      axios.get(this.state.baseUrl + this.state.dateToday + this.state.scoreboardSuffix)
         .then((response) => {
           let lastGameSummaryData = response.games[response.numGames - 1]
-          if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== basicGameData.hTeam.score)) {
+          if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== lastGameSummaryData.basicGameData.hTeam.score)) {
             context.commit('setTodayGameEnd')
           }
         })
-    }*/
+    }
   }
 })
