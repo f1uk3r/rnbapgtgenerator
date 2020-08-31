@@ -9,7 +9,34 @@
           <figure class="image is5by5" :id="vTeamLogo"></figure>
         </b-field>
       </div>
-      <!--<GameTable :gameData="currentGameData.stats"></GameTable>
+
+      <div class="card game-box-score-h-team">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-5by5" :id="hTeamLogo"></figure>
+              <p class="is-7">{{ hTeam }}</p>
+            </div>
+          </div>
+          <div class="content">
+            <GameTable :boxScoreData="hTeamBoxScore"></GameTable>
+          </div>
+        </div>
+      </div>
+      <div class="card game-box-score-v-team">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-5by5" :id="vTeamLogo"></figure>
+              <p class="is-7">{{ vTeam }}</p>
+            </div>
+          </div>
+          <div class="content">
+            <GameTable :boxScoreData="vTeamBoxScore"></GameTable>
+          </div>
+        </div>
+      </div>
+      <!--
         <GameTableReddit :gameData="currentGameData"></GameTableReddit>-->
     </section>
   </div>
@@ -18,7 +45,7 @@
 <script>
 import axios from 'axios'
 import GameBar from '../components/GameBar.vue'
-//import GameTable from '../components/GameTable.vue'
+import GameTable from '../components/GameTable.vue'
 //import GameTableReddit from '../components/GameTableReddit.vue'
 import { mapGetters } from 'vuex'
 
@@ -26,8 +53,8 @@ export default {
   name: 'Game',
   components: {
     GameBar,
-    /*GameTable,
-    GameTableReddit*/
+    GameTable
+    //GameTableReddit
   },
   data () {
     return {
@@ -48,11 +75,27 @@ export default {
     vTeamLogo () {
       return this.$store.getters.teamsData[this.currentGameData.basicGameData.vTeam.triCode][5]
     },
+    hTeam () {
+      return this.$store.getters.teamsData[this.currentGameData.basicGameData.hTeam.triCode][0]
+    },
+    vTeam () {
+      return this.$store.getters.teamsData[this.currentGameData.basicGameData.vTeam.triCode][0]
+    },
     getUrl () {
       return this.$store.getters.baseUrl + this.$store.getters.dateToday + this.$store.getters.scoreboardSuffix
     },
     getGameUrl () {
       return this.$store.getters.baseUrl + this.$store.getters.dateToday + '/' + this.$route.params.id + '_boxscore.json'
+    },
+    hTeamBoxScore () {
+      return this.currentGameData.stats.activePlayers.filter((player) => {
+        return player.teamId === this.currentGameData.basicGameData.hTeam.teamId
+      })
+    },
+    vTeamBoxScore () {
+      return this.currentGameData.stats.activePlayers.filter((player) => {
+        return player.teamId === this.currentGameData.basicGameData.vTeam.teamId
+      })
     }
   },
   mounted () {
