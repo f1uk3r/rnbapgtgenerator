@@ -2,42 +2,50 @@
   <div class="sidebar-page">
     <section class="sidebar-layout">
       <GameBar :gamesData="scoreboardData.games"></GameBar>
-      <div class="container">
+      <div v-if="currentGameData!=={}" class="container">
         <b-field grouped position="is-centered">
           <figure class="image is5by5" :id="hTeamLogo"></figure>
           <p class="is-7">{{ currentGameData.basicGameData.hTeam.score }}-{{ currentGameData.basicGameData.vTeam.score }}</p>
           <figure class="image is5by5" :id="vTeamLogo"></figure>
         </b-field>
-      </div>
 
-      <div class="card game-box-score-h-team">
-        <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-5by5" :id="hTeamLogo"></figure>
-              <p class="is-7">{{ hTeam }}</p>
+        <div class="card game-box-score-h-team">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-left">
+                <b-field>
+                  <figure class="image is-5by5" :id="hTeamLogo"></figure>
+                  <p class="is-7">{{ hTeam }}</p>
+                </b-field>
+              </div>
+            </div>
+            <div class="content">
+              <GameTable :boxScoreData="hTeamBoxScore"></GameTable>
             </div>
           </div>
-          <div class="content">
-            <GameTable :boxScoreData="hTeamBoxScore"></GameTable>
-          </div>
         </div>
-      </div>
-      <div class="card game-box-score-v-team">
-        <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-5by5" :id="vTeamLogo"></figure>
-              <p class="is-7">{{ vTeam }}</p>
+        
+        <div class="card game-box-score-v-team">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-left">
+                <b-field>
+                  <figure class="image is-5by5" :id="vTeamLogo"></figure>
+                  <p class="is-7">{{ vTeam }}</p>
+                </b-field>
+              </div>
+            </div>
+            <div class="content">
+              <GameTable :boxScoreData="vTeamBoxScore"></GameTable>
             </div>
           </div>
-          <div class="content">
-            <GameTable :boxScoreData="vTeamBoxScore"></GameTable>
-          </div>
         </div>
+
+        <GameTableReddit :gameData="currentGameData"></GameTableReddit>
       </div>
+      
       <!--
-        <GameTableReddit :gameData="currentGameData"></GameTableReddit>-->
+        -->
     </section>
   </div>
 </template>
@@ -46,20 +54,20 @@
 import axios from 'axios'
 import GameBar from '../components/GameBar.vue'
 import GameTable from '../components/GameTable.vue'
-//import GameTableReddit from '../components/GameTableReddit.vue'
+import GameTableReddit from '../components/GameTableReddit.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Game',
   components: {
     GameBar,
-    GameTable
-    //GameTableReddit
+    GameTable,
+    GameTableReddit
   },
   data () {
     return {
-      currentGameData: null,
-      scoreboardData: null
+      currentGameData: {},
+      scoreboardData: {}
     }
   },
   computed: {
@@ -127,7 +135,7 @@ export default {
   created () {
     setInterval(() => {
       this.getCurrentGameData()
-    }, 5000)
+    }, 50000)
   }
 
 }
