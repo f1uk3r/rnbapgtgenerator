@@ -99,7 +99,7 @@ export default {
       return this.$store.getters.baseUrl + this.$store.getters.dateToday + this.$store.getters.scoreboardSuffix
     },
     getGameUrl () {
-      return this.$store.getters.baseUrl + this.$store.getters.dateToday + '/' + this.$route.params.id + '_boxscore.json'
+      return this.$store.getters.baseUrl + this.$store.getters.dateToday + '/' + this.$route.params.id + '_boxscore.json/'
     },
     hTeamBoxScore () {
       return this.currentGameData.stats.activePlayers.filter((player) => {

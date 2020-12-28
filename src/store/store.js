@@ -252,7 +252,7 @@ export const store = new Vuex.Store({
     yesterdayLastGameEnd: false,
     todayLastGameEnd: false,
     baseUrl: 'https://data.nba.net/prod/v1/',
-    scoreboardSuffix: '/scoreboard.json'
+    scoreboardSuffix: '/scoreboard.json/'
   },
   getters: {
     teamsData: state => state.teamsData,
