@@ -72,7 +72,9 @@ export default {
   data () {
     return {
       currentGameData: {},
-      scoreboardData: {}
+      scoreboardData: {},
+      currentGameInterval: null,
+      scoreboardInterval: null
     }
   },
   computed: {
@@ -141,9 +143,16 @@ export default {
     }
   },
   created () {
-    setInterval(() => {
+    this.currentGameInterval = setInterval(() => {
       this.getCurrentGameData()
+    }, 5000),
+    this.scoreboardInterval = setInterval(() => {
+      this.getScoreboardData()
     }, 5000)
+  },
+  destroyed () {
+    clearInterval(this.currentGameInterval)
+    clearInterval(this.scoreboardIntervalhttps://f1uk3r.github.io/rnbapgtgenerator/)
   }
 
 }

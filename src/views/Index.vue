@@ -28,7 +28,8 @@ export default {
   data () {
     return  {
       scoreboardData: null,
-      activeTab: 0
+      activeTab: 0,
+      scoreboardInterval: null
     }
   },
   computed: {
@@ -64,9 +65,12 @@ export default {
     }
   },
   created () {
-    setInterval(() => {
+    this.scoreboardInterval = setInterval(() => {
       this.getScoreboardData()
     }, 5000)
+  },
+  destroyed () {
+    clearInterval(this.scoreboardInterval)
   }
 }
 </script>
