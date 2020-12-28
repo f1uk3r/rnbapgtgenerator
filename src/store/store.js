@@ -289,8 +289,9 @@ export const store = new Vuex.Store({
       context.commit('setDatesWhenYesterdayGameNotOver')
     },
     checkYesterdayLastGameEnd (context) {
-      axios.get(this.state.baseUrl + this.state.dateYesterday + this.state.scoreboardSuffix)
-        .then((response) => {
+      axios.get(this.state.baseUrl + this.state.dateYesterday + this.state.scoreboardSuffix, {
+        crossDomain: true
+      }).then((response) => {
           let lastGameSummaryData = response.data.games[response.data.numGames - 1]
           if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== lastGameSummaryData.hTeam.score)) {
             context.commit('setDates')
@@ -302,8 +303,9 @@ export const store = new Vuex.Store({
         })
     },
     checkTodayLastGameEnd (context) {
-      axios.get(this.state.baseUrl + this.state.dateToday + this.state.scoreboardSuffix)
-        .then((response) => {
+      axios.get(this.state.baseUrl + this.state.dateToday + this.state.scoreboardSuffix, {
+        crossDomain: true
+      }).then((response) => {
           let lastGameSummaryData = response.data.games[response.data.numGames - 1]
           if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== lastGameSummaryData.hTeam.score)) {
             context.commit('setTodayGameEnd')

@@ -130,12 +130,12 @@ export default {
       } return someStat
     },
     getScoreboardData () {
-      axios.get(this.getUrl).then((response) => {
+      axios.get(this.getUrl, {crossDomain: true}).then((response) => {
         this.scoreboardData = response.data
       })
     },
     getCurrentGameData () {
-      axios.get(this.getGameUrl).then((response) => {
+      axios.get(this.getGameUrl, {crossDomain: true}).then((response) => {
         this.currentGameData = response.data
       })
     }
