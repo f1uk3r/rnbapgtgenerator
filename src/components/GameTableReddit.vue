@@ -104,11 +104,11 @@ export default {
           body = body + `|${playerStat.firstName} ${playerStat.lastName}|${playerStat.min}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|${playerStat.points}|\n`
         }
       }
-      /*body = body + `
+      body = body + `
       
 ||
 |:-:|
-|^[bot-script](https://github.com/f1uk3r/Some-Python-Scripts/blob/master/reddit-nba-bot/reddit-boxscore-bot.py) ^by ^/u/f1uk3r|`*/
+|^[rnbapgtgenerator](https://f1uk3r.github.io/rnbapgtgenerator/) ^by ^/u/f1uk3r|`
 return body
     },
     computeRedditTitle () {
