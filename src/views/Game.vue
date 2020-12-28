@@ -152,7 +152,7 @@ export default {
   },
   destroyed () {
     clearInterval(this.currentGameInterval)
-    clearInterval(this.scoreboardIntervalhttps://f1uk3r.github.io/rnbapgtgenerator/)
+    clearInterval(this.scoreboardInterval)
   }
 
 }
