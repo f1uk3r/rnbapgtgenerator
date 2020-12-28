@@ -82,16 +82,6 @@ export default {
 ||
 |:-:|
 |&nbsp;|
-|**TEAM LEADERS**|
-
-|**Team**|**Points**|**Rebounds**|**Assists**|
-|:--|:--|:--|:--|
-|${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}|**${gameStats.vTeam.leaders.points.value}** ${gameStats.vTeam.leaders.points.players[0].firstName} ${gameStats.vTeam.leaders.points.players[0].lastName}|**${gameStats.vTeam.leaders.rebounds.value}** ${gameStats.vTeam.leaders.rebounds.players[0].firstName} ${gameStats.vTeam.leaders.rebounds.players[0].lastName}|**${gameStats.vTeam.leaders.assists.value}** ${gameStats.vTeam.leaders.assists.players[0].firstName} ${gameStats.vTeam.leaders.assists.players[0].lastName}|
-|${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}|**${gameStats.hTeam.leaders.points.value}** ${gameStats.hTeam.leaders.points.players[0].firstName} ${gameStats.hTeam.leaders.points.players[0].lastName}|**${gameStats.hTeam.leaders.rebounds.value}** ${gameStats.hTeam.leaders.rebounds.players[0].firstName} ${gameStats.hTeam.leaders.rebounds.players[0].lastName}|**${gameStats.hTeam.leaders.assists.value}** ${gameStats.hTeam.leaders.assists.players[0].firstName} ${gameStats.hTeam.leaders.assists.players[0].lastName}|
-
-||
-|:-:|
-|&nbsp;|
 |**PLAYER STATS**|
 
 ||||||||||||||||
@@ -114,52 +104,48 @@ export default {
           body = body + `|${playerStat.firstName} ${playerStat.lastName}|${playerStat.min}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|${playerStat.points}|\n`
         }
       }
-      body = body + `
+      /*body = body + `
       
 ||
 |:-:|
-|^[bot-script](https://github.com/f1uk3r/Some-Python-Scripts/blob/master/reddit-nba-bot/reddit-boxscore-bot.py) ^by ^/u/f1uk3r|`
-      /* |**Team**|**Biggest Lead**|**Longest Run**|**PTS: In Paint**|**PTS: Off TOs**|**PTS: Fastbreak**|
-|:--|:--|:--|:--|:--|:--|
-|${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}|${gameStats.vTeam.biggestLead}|${gameStats.vTeam.longestRun}|${gameStats.vTeam.pointsInPaint}|${gameStats.vTeam.pointsOffTurnovers}|${gameStats.vTeam.fastBreakPoints}|
-|${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}|${gameStats.hTeam.biggestLead}|${gameStats.hTeam.longestRun}|${gameStats.hTeam.pointsInPaint}|${gameStats.hTeam.pointsOffTurnovers}|${gameStats.hTeam.fastBreakPoints}| */
-      return body
+|^[bot-script](https://github.com/f1uk3r/Some-Python-Scripts/blob/master/reddit-nba-bot/reddit-boxscore-bot.py) ^by ^/u/f1uk3r|`*/
+return body
     },
     computeRedditTitle () {
       const basicData = this.gameData.basicGameData
-      const vTeamScore = basicData.vTeam.score
-      const hTeamScore = basicData.hTeam.score
+      const vTeamScore = parseInt(basicData.vTeam.score)
+      const hTeamScore = parseInt(basicData.hTeam.score)
       let visitorTeam = 'not defined'
       let homeTeam = 'not defined'
       let title = '[Post Game Thread] The '
       if (basicData.isGameActivated === false) {
-        visitorTeam = `${this.$store.getters.teamsData[basicData.vTeam.triCode][0]} (${basicData.vTeam.seriesWin}-${basicData.vTeam.seriesLoss})`
-        homeTeam = `${this.$store.getters.teamsData[basicData.hTeam.triCode][0]} (${basicData.hTeam.seriesWin}-${basicData.hTeam.seriesLoss})`
-      } else if ((basicData.isGameActivated == true) && (vTeamScore > hTeamScore) && (basicData.vTeam.linescore.length >= 4)) {
-        visitorTeam = `${this.$store.getters.teamsData[basicData.vTeam.triCode][0]} (${basicData.vTeam.seriesWin + 1}-${basicData.vTeam.seriesLoss})`
-        homeTeam = `${this.$store.getters.teamsData[basicData.hTeam.triCode][0]} (${basicData.hTeam.seriesWin}-${basicData.hTeam.seriesLoss + 1})`
-      } else if ((basicData.isGameActivated == true) && (vTeamScore < hTeamScore) && (basicData.vTeam.linescore.length >= 4)) {
-        visitorTeam = `${this.$store.getters.teamsData[basicData.vTeam.triCode][0]} (${basicData.vTeam.seriesWin}-${basicData.vTeam.seriesLoss + 1})`
-        homeTeam = `${this.$store.getters.teamsData[basicData.hTeam.triCode][0]} (${basicData.hTeam.seriesWin + 1}-${basicData.hTeam.seriesLoss})`
+        visitorTeam = `${this.$store.getters.teamsData[basicData.vTeam.triCode][0]} (${basicData.vTeam.win}-${basicData.vTeam.loss})`
+        homeTeam = `${this.$store.getters.teamsData[basicData.hTeam.triCode][0]} (${basicData.hTeam.win}-${basicData.hTeam.loss})`
+      } else if ((basicData.isGameActivated == true) && (vTeamScore > hTeamScore) && (parseInt(basicData.vTeam.linescore.length) >= 4)) {
+        visitorTeam = `${this.$store.getters.teamsData[basicData.vTeam.triCode][0]} (${parseInt(basicData.vTeam.win) + 1}-${basicData.vTeam.loss})`
+        homeTeam = `${this.$store.getters.teamsData[basicData.hTeam.triCode][0]} (${basicData.hTeam.win}-${parseInt(basicData.hTeam.loss) + 1})`
+      } else if ((basicData.isGameActivated == true) && (vTeamScore < hTeamScore) && (parseInt(basicData.vTeam.linescore.length) >= 4)) {
+        visitorTeam = `${this.$store.getters.teamsData[basicData.vTeam.triCode][0]} (${basicData.vTeam.win}-${parseInt(basicData.vTeam.loss) + 1})`
+        homeTeam = `${this.$store.getters.teamsData[basicData.hTeam.triCode][0]} (${parseInt(basicData.hTeam.win) + 1}-${basicData.hTeam.loss})`
       }
 
-      if ((vTeamScore > hTeamScore) && (basicData.vTeam.linescore.length === 4)) {
+      if ((vTeamScore > hTeamScore) && (parseInt(basicData.vTeam.linescore.length) === 4)) {
         title = title + `${visitorTeam} defeat the ${homeTeam}, ${vTeamScore} - ${hTeamScore}`
-      } else if ((vTeamScore > hTeamScore) && (basicData.vTeam.linescore.length === 5)) {
+      } else if ((vTeamScore > hTeamScore) && (parseInt(basicData.vTeam.linescore.length) === 5)) {
         title = title + `${visitorTeam} defeat the ${homeTeam} in OT, ${vTeamScore} - ${hTeamScore}`
       } else if ((vTeamScore > hTeamScore) && (basicData.vTeam.linescore.length > 5)) {
         title = title + `${visitorTeam} defeat the ${homeTeam} in ${basicData.vTeam.linescore.length - 4} OT, ${vTeamScore} - ${hTeamScore}`
-      } else if ((vTeamScore < hTeamScore) && (basicData.vTeam.linescore.length === 4)) {
+      } else if ((vTeamScore < hTeamScore) && (parseInt(basicData.vTeam.linescore.length) === 4)) {
         title = title + `${homeTeam} defeat the ${visitorTeam}, ${hTeamScore} - ${vTeamScore}`
-      } else if ((vTeamScore < hTeamScore) && (basicData.vTeam.linescore.length === 5)) {
+      } else if ((vTeamScore < hTeamScore) && (parseInt(basicData.vTeam.linescore.length) === 5)) {
         title = title + `${homeTeam} defeat the ${visitorTeam} in OT, ${hTeamScore} - ${vTeamScore}`
-      } else if ((vTeamScore < hTeamScore) && (basicData.vTeam.linescore.length > 5)) {
+      } else if ((vTeamScore < hTeamScore) && (parseInt(basicData.vTeam.linescore.length) > 5)) {
         title = title + `${homeTeam} defeat the ${visitorTeam} in ${basicData.vTeam.linescore.length - 4} OT, ${hTeamScore} - ${vTeamScore}`
       }
       return title
     },
     redditSubmissionUrl () {
-      return `https://www.reddit.com/r/nba_mods/submit?title=${encodeURIComponent(this.computeRedditTitle)}&text=${encodeURIComponent(this.computeRedditBoxscore)}`
+      return `https://www.reddit.com/r/nba/submit?title=${encodeURIComponent(this.computeRedditTitle)}&text=${encodeURIComponent(this.computeRedditBoxscore)}`
     }
   },
   methods: {
