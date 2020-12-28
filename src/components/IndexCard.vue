@@ -6,10 +6,10 @@
           <figure class="image is-5by5" :id="hTeamLogo"></figure>
           <p class="is-7">({{ gameData.hTeam.win }}-{{ gameData.hTeam.loss }})</p>
         </div>
-        <div class="media-content">
-          <p class="title is-6">{{ gameData.hTeam.score }} - {{ gameData.vTeam.score }}</p>
-          <p class="subtitle is-6" v-if="gameData.period.current>1 & gameData.clock!==''">{{  gameData.clock  }}</p>
-          <p class="subtitle is-6" v-else-if="gameData.period.current===1 && gameData.clock!==''">{{  gameData.clock  }}</p>
+        <div class="media-content has-text-centered">
+          <p class="title is-6"> {{ gameData.hTeam.score }} - {{ gameData.vTeam.score }}</p>
+          <p class="subtitle is-6" v-if="gameData.period.current>1 & gameData.clock!==''">{{  gameData.clock  }} {{  gameData.period.current  }}Q</p>
+          <p class="subtitle is-6" v-else-if="gameData.period.current===1 && gameData.clock!==''">{{  gameData.clock  }} {{  gameData.period.current  }}Q</p>
           <p class="subtitle is-6" v-else-if="gameData.period.current===1 && gameData.clock===''">{{  gameData.startTimeEastern  }}</p>
         </div>
         <div class="media-right">
@@ -18,7 +18,9 @@
         </div>
       </div>
       <div class="content">
-        <p class="is-6">{{ gameData.arena.name }}, {{ gameData.arena.city }} ({{ gameData.attendance}})</p>
+        <p v-if="gameData.attendance===0" class="is-6">{{ gameData.arena.name }}, {{ gameData.arena.city }}</p>
+        <p v-else-if="gameData.attendance" class="is-6">{{ gameData.arena.name }}, {{ gameData.arena.city }} ({{ gameData.attendance}})</p>
+        <p v-else>{{ gameData.arena.name }}, {{ gameData.arena.city }}</p>
       </div>
     </div>
   </div>
