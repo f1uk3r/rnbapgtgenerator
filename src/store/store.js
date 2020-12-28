@@ -251,7 +251,7 @@ export const store = new Vuex.Store({
     dateToday: '',
     yesterdayLastGameEnd: false,
     todayLastGameEnd: false,
-    baseUrl: 'http://data.nba.net/prod/v1/',
+    baseUrl: 'https://data.nba.net/prod/v1/',
     scoreboardSuffix: '/scoreboard.json'
   },
   getters: {
