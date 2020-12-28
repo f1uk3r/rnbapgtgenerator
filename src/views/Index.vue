@@ -47,10 +47,6 @@ export default {
 
     this.$store.dispatch('checkYesterdayLastGameEnd')
 
-    if (!this.$store.getters.yesterdayLastGameEnd) {
-      this.$store.dispatch('initialiseDatesWhenYesterdayGameNotOver')
-    }
-
     this.getScoreboardData()
   },
   methods: {

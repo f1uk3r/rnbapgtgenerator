@@ -2,11 +2,16 @@
   <div class="sidebar-page">
     <section class="sidebar-layout">
       <GameBar :gamesData="scoreboardData.games"></GameBar>
-      <div v-if="currentGameData!=={}" class="container">
+      <div v-if="currentGameData.basicGameData.vTeam.score!==''" class="container">
         <b-field grouped position="is-centered">
           <figure class="image is5by5" :id="hTeamLogo"></figure>
           <p class="is-7">{{ currentGameData.basicGameData.hTeam.score }}-{{ currentGameData.basicGameData.vTeam.score }}</p>
           <figure class="image is5by5" :id="vTeamLogo"></figure>
+        </b-field>
+        <b-field position="is-centered">
+          <p v-if="currentGameData.period.current>1 & currentGameData.clock!==''">{{  currentGameData.clock  }} {{  currentGameData.period.current  }}Q</p>
+          <p v-else-if="currentGameData.period.current===1 && currentGameData.clock!==''">{{  currentGameData.clock  }} {{  currentGameData.period.current  }}Q</p>
+          <p v-else-if="currentGameData.period.current===1 && currentGameData.clock===''">{{  currentGameData.startTimeEastern  }}</p>
         </b-field>
 
         <div class="card game-box-score-h-team">
@@ -73,6 +78,7 @@ export default {
   computed: {
     ...mapGetters([
       'dateToday',
+      'dateYesterday',
       'teamsData',
       'baseUrl',
       'scoreboardSuffix'
@@ -109,6 +115,8 @@ export default {
   mounted () {
     this.$store.dispatch('initialiseDates')
 
+    this.$store.dispatch('checkYesterdayLastGameEnd')
+
     this.getScoreboardData()
 
     this.getCurrentGameData()
@@ -135,7 +143,7 @@ export default {
   created () {
     setInterval(() => {
       this.getCurrentGameData()
-    }, 50000)
+    }, 5000)
   }
 
 }
