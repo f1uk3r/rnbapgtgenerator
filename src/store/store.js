@@ -277,7 +277,7 @@ export const store = new Vuex.Store({
     },
     setDatesWhenYesterdayGameNotOver (state) {
       let date = new Date()
-      state.dateToday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + date.getDate() - 1).slice(-2)
+      state.dateToday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + (date.getDate() - 1)).slice(-2)
       state.dateYesterday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + (date.getDate() - 2)).slice(-2)
     }
   },
@@ -291,17 +291,21 @@ export const store = new Vuex.Store({
     checkYesterdayLastGameEnd (context) {
       axios.get(this.state.baseUrl + this.state.dateYesterday + this.state.scoreboardSuffix)
         .then((response) => {
-          let lastGameSummaryData = response.games[response.numGames - 1]
-          if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== lastGameSummaryData.basicGameData.hTeam.score)) {
-            context.commit('setYesterdayGameEnd')
+          let lastGameSummaryData = response.data.games[response.data.numGames - 1]
+          if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== lastGameSummaryData.hTeam.score)) {
+            context.commit('setDates')
+          }
+          else {
+            console.log('hello')
+            context.commit('setDatesWhenYesterdayGameNotOver')
           }
         })
     },
     checkTodayLastGameEnd (context) {
       axios.get(this.state.baseUrl + this.state.dateToday + this.state.scoreboardSuffix)
         .then((response) => {
-          let lastGameSummaryData = response.games[response.numGames - 1]
-          if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== lastGameSummaryData.basicGameData.hTeam.score)) {
+          let lastGameSummaryData = response.data.games[response.data.numGames - 1]
+          if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== lastGameSummaryData.hTeam.score)) {
             context.commit('setTodayGameEnd')
           }
         })
