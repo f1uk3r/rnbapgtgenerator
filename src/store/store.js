@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
         "atlanta-hawks-",
         "http://np.reddit.com/r/atlantahawks",
         "1610612737",
-        "atl"
+        "atl",
+        "atlantahawks"
       ],
       "BKN": [
         "Brooklyn Nets",
@@ -20,7 +21,8 @@ export const store = new Vuex.Store({
         "boston-celtics-",
         "http://np.reddit.com/r/bostonceltics",
         "1610612738",
-        "bkn"
+        "bkn",
+        "bostonceltics"
       ],
       "BOS": [
         "Boston Celtics",
@@ -28,7 +30,8 @@ export const store = new Vuex.Store({
         "brooklyn-nets-",
         "http://np.reddit.com/r/gonets",
         "1610612751",
-        "bos"
+        "bos",
+        "gonets"
       ],
       "CHA": [
         "Charlotte Hornets",
@@ -36,7 +39,8 @@ export const store = new Vuex.Store({
         "charlotte-hornets-",
         "http://np.reddit.com/r/charlottehornets",
         "1610612766",
-        "cha"
+        "cha",
+        "charlottehornets"
       ],
       "CHI": [
         "Chicago Bulls",
@@ -44,7 +48,8 @@ export const store = new Vuex.Store({
         "chicago-bulls-",
         "http://np.reddit.com/r/chicagobulls",
         "1610612741",
-        "chi"
+        "chi",
+        "chicagobulls"
       ],
       "CLE": [
         "Cleveland Cavaliers",
@@ -52,7 +57,8 @@ export const store = new Vuex.Store({
         "cleveland-cavaliers-",
         "http://np.reddit.com/r/clevelandcavs",
         "1610612739",
-        "cle"
+        "cle",
+        "clevelandcavs"
       ],
       "DAL": [
         "Dallas Mavericks",
@@ -60,7 +66,8 @@ export const store = new Vuex.Store({
         "dallas-mavericks-",
         "http://np.reddit.com/r/mavericks",
         "1610612742",
-        "dal"
+        "dal",
+        "mavericks"
       ],
       "DEN": [
         "Denver Nuggets",
@@ -68,7 +75,8 @@ export const store = new Vuex.Store({
         "denver-nuggets-",
         "http://np.reddit.com/r/denvernuggets",
         "1610612743",
-        "den"
+        "den",
+        "denvernuggets"
       ],
       "DET": [
         "Detroit Pistons",
@@ -76,7 +84,8 @@ export const store = new Vuex.Store({
         "detroit-pistons-",
         "http://np.reddit.com/r/detroitpistons",
         "1610612765",
-        "det"
+        "det",
+        "detroitpistons"
       ],
       "GSW": [
         "Golden State Warriors",
@@ -84,7 +93,8 @@ export const store = new Vuex.Store({
         "golden-state-warriors-",
         "http://np.reddit.com/r/warriors",
         "1610612744",
-        "gsw"
+        "gsw",
+        "warriors"
       ],
       "HOU": [
         "Houston Rockets",
@@ -92,7 +102,8 @@ export const store = new Vuex.Store({
         "houston-rockets-",
         "http://np.reddit.com/r/rockets",
         "1610612745",
-        "hou"
+        "hou",
+        "rockets"
       ],
       "IND": [
         "Indiana Pacers",
@@ -100,7 +111,8 @@ export const store = new Vuex.Store({
         "indiana-pacers-",
         "http://np.reddit.com/r/pacers",
         "1610612754",
-        "ind"
+        "ind",
+        "pacers"
       ],
       "LAC": [
         "Los Angeles Clippers",
@@ -108,7 +120,8 @@ export const store = new Vuex.Store({
         "los-angeles-clippers-",
         "http://np.reddit.com/r/laclippers",
         "1610612746",
-        "lac"
+        "lac",
+        "laclippers"
       ],
       "LAL": [
         "Los Angeles Lakers",
@@ -116,7 +129,8 @@ export const store = new Vuex.Store({
         "los-angeles-lakers-",
         "http://np.reddit.com/r/lakers",
         "1610612747",
-        "lal"
+        "lal",
+        "lakers"
       ],
       "MEM": [
         "Memphis Grizzlies",
@@ -124,7 +138,8 @@ export const store = new Vuex.Store({
         "memphis-grizzlies-",
         "http://np.reddit.com/r/memphisgrizzlies",
         "1610612763",
-        "mem"
+        "mem",
+        "memphisgrizzlies"
       ],
       "MIA": [
         "Miami Heat",
@@ -132,7 +147,8 @@ export const store = new Vuex.Store({
         "miami-heat-",
         "http://np.reddit.com/r/heat",
         "1610612748",
-        "mia"
+        "mia",
+        "heat"
       ],
       "MIL": [
         "Milwaukee Bucks",
@@ -140,7 +156,8 @@ export const store = new Vuex.Store({
         "milwaukee-bucks-",
         "http://np.reddit.com/r/mkebucks",
         "1610612749",
-        "mil"
+        "mil",
+        "mkebucks"
       ],
       "MIN": [
         "Minnesota Timberwolves",
@@ -148,7 +165,8 @@ export const store = new Vuex.Store({
         "minnesota-timberwolves-",
         "http://np.reddit.com/r/timberwolves",
         "1610612750",
-        "min"
+        "min",
+        "timberwolves"
       ],
       "NOP": [
         "New Orleans Pelicans",
@@ -156,7 +174,8 @@ export const store = new Vuex.Store({
         "new-orleans-pelicans-",
         "http://np.reddit.com/r/nolapelicans",
         "1610612740",
-        "nop"
+        "nop",
+        "nolapelicans"
       ],
       "NYK": [
         "New York Knicks",
@@ -164,7 +183,8 @@ export const store = new Vuex.Store({
         "new-york-knicks-",
         "http://np.reddit.com/r/nyknicks",
         "1610612752",
-        "nyk"
+        "nyk",
+        "nyknicks"
       ],
       "OKC": [
         "Oklahoma City Thunder",
@@ -172,7 +192,8 @@ export const store = new Vuex.Store({
         "oklahoma-city-thunder-",
         "http://np.reddit.com/r/thunder",
         "1610612760",
-        "okc"
+        "okc",
+        "thunder"
       ],
       "ORL": [
         "Orlando Magic",
@@ -180,7 +201,8 @@ export const store = new Vuex.Store({
         "orlando-magic-",
         "http://np.reddit.com/r/orlandomagic",
         "1610612753",
-        "orl"
+        "orl",
+        "orlandomagic"
       ],
       "PHI": [
         "Philadelphia 76ers",
@@ -188,7 +210,8 @@ export const store = new Vuex.Store({
         "philadelphia-76ers-",
         "http://np.reddit.com/r/sixers",
         "1610612755",
-        "phi"
+        "phi",
+        "sixers"
       ],
       "PHX": [
         "Phoenix Suns",
@@ -196,7 +219,8 @@ export const store = new Vuex.Store({
         "phoenix-suns-",
         "http://np.reddit.com/r/suns",
         "1610612756",
-        "phx"
+        "phx",
+        "suns"
       ],
       "POR": [
         "Portland Trail Blazers",
@@ -204,7 +228,8 @@ export const store = new Vuex.Store({
         "portland-trail-blazers-",
         "http://np.reddit.com/r/ripcity",
         "1610612757",
-        "por"
+        "por",
+        "ripcity"
       ],
       "SAC": [
         "Sacramento Kings",
@@ -212,7 +237,8 @@ export const store = new Vuex.Store({
         "sacramento-kings-",
         "http://np.reddit.com/r/kings",
         "1610612758",
-        "sac"
+        "sac",
+        "kings"
       ],
       "SAS": [
         "San Antonio Spurs",
@@ -220,7 +246,8 @@ export const store = new Vuex.Store({
         "san-antonio-spurs-",
         "http://np.reddit.com/r/nbaspurs",
         "1610612759",
-        "sas"
+        "sas",
+        "nbaspurs"
       ],
       "TOR": [
         "Toronto Raptors",
@@ -228,7 +255,8 @@ export const store = new Vuex.Store({
         "toronto-raptors-",
         "http://np.reddit.com/r/torontoraptors",
         "1610612761",
-        "tor"
+        "tor",
+        "torontoraptors"
       ],
       "UTA": [
         "Utah Jazz",
@@ -236,7 +264,8 @@ export const store = new Vuex.Store({
         "utah-jazz-",
         "http://np.reddit.com/r/utahjazz",
         "1610612762",
-        "uta"
+        "uta",
+        "utahjazz"
       ],
       "WAS": [
         "Washington Wizards",
@@ -244,7 +273,8 @@ export const store = new Vuex.Store({
         "washington-wizards-",
         "http://np.reddit.com/r/washingtonwizards",
         "1610612764",
-        "was"
+        "was",
+        "washingtonwizards"
       ],
     },
     dateYesterday: '',
