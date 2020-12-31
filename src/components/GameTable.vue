@@ -1,6 +1,6 @@
 <template>
   <section>
-    <b-table mobile-cards="false" :data="calculateDataForTable" :columns="columns"></b-table>
+    <b-table :data="calculateDataForTable" :columns="columns"></b-table>
   </section>
 </template>
 
