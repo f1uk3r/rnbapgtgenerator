@@ -5,9 +5,17 @@
 
       </b-input>
     </b-field>
-    <b-button tag="a" :href="redditSubmissionUrl" type="is-info" target="_blank">
-      Submit Post Game Thread
-    </b-button>
+    <div class="buttons">
+      <b-button tag="a" :href="redditSubmissionUrl" type="is-info" target="_blank">
+        Submit r/nba Post Game Thread
+      </b-button>
+      <b-button tag="a" :href="vTeamSubmissionUrl" type="is-primary" target="_blank">
+        Submit r/{{ this.$store.getters.teamsData[this.gameData.basicGameData.vTeam.triCode][6] }}Post Game Thread
+      </b-button>
+      <b-button tag="a" :href="hTeamSubmissionUrl" type="is-primary" target="_blank">
+        Submit r/{{ this.$store.getters.teamsData[this.gameData.basicGameData.hTeam.triCode][6] }} Post Game Thread
+      </b-button>
+    </div>
   </div>
 </template>
 
@@ -86,22 +94,22 @@ export default {
 
 ||||||||||||||||
 |:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|
-**[](/${basicData.vTeam.triCode}) ${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}**|**MIN**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|**PTS**|\n`
+**[](/${basicData.vTeam.triCode}) ${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n`
       for (let i = 0; i < boxscoreData.length; i++) {
         const playerStat = boxscoreData[i]
         if (playerStat.teamId === basicData.vTeam.teamId && playerStat.pos !== "") {
-          body = body + `|${playerStat.firstName} ${playerStat.lastName}^${playerStat.pos}|${playerStat.min}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|${playerStat.points}|\n`
+          body = body + `|${playerStat.firstName} ${playerStat.lastName}^${playerStat.pos}|${playerStat.min}|${playerStat.points}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|\n`
         } else if (playerStat.teamId === basicData.vTeam.teamId && playerStat.pos === "") {
-          body = body + `|${playerStat.firstName} ${playerStat.lastName}|${playerStat.min}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|${playerStat.points}|\n`
+          body = body + `|${playerStat.firstName} ${playerStat.lastName}|${playerStat.min}|${playerStat.points}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|\n`
         }
       }
-      body = body + `**[](/${basicData.hTeam.triCode}) ${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}**|**MIN**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|**PTS**|\n`
+      body = body + `**[](/${basicData.hTeam.triCode}) ${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n`
       for (let i = 0; i < boxscoreData.length; i++) {
         const playerStat = boxscoreData[i]
         if (playerStat.teamId !== basicData.vTeam.teamId && playerStat.pos !== "") {
-          body = body + `|${playerStat.firstName} ${playerStat.lastName}^${playerStat.pos}|${playerStat.min}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|${playerStat.points}|\n`
+          body = body + `|${playerStat.firstName} ${playerStat.lastName}^${playerStat.pos}|${playerStat.min}|${playerStat.points}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|\n`
         } else if (playerStat.teamId !== basicData.vTeam.teamId && playerStat.pos === "") {
-          body = body + `|${playerStat.firstName} ${playerStat.lastName}|${playerStat.min}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|${playerStat.points}|\n`
+          body = body + `|${playerStat.firstName} ${playerStat.lastName}|${playerStat.min}|${playerStat.points}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|\n`
         }
       }
       body = body + `
@@ -146,7 +154,14 @@ return body
     },
     redditSubmissionUrl () {
       return `https://www.reddit.com/r/nba/submit?title=${encodeURIComponent(this.computeRedditTitle)}&text=${encodeURIComponent(this.computeRedditBoxscore)}`
+    },
+    vTeamSubmissionUrl () {
+      return `https://www.reddit.com/r/${this.$store.getters.teamsData[this.gameData.basicGameData.vTeam.triCode][6]}/submit?title=${encodeURIComponent(this.computeRedditTitle)}&text=${encodeURIComponent(this.computeRedditBoxscore)}`
+    },
+    hTeamSubmissionUrl () {
+      return `https://www.reddit.com/r/${this.$store.getters.teamsData[this.gameData.basicGameData.hTeam.triCode][6]}/submit?title=${encodeURIComponent(this.computeRedditTitle)}&text=${encodeURIComponent(this.computeRedditBoxscore)}`
     }
+
   },
   methods: {
     apendPlusMinus (someStat) {
