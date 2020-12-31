@@ -12,7 +12,7 @@ Vue.use(VueRouter)
     component: Home
   },
   {
-    path: '/games/:id',
+    path: '/games/:date/:id',
     name: 'Games',
     component: Game
   }
