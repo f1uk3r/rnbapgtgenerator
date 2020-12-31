@@ -2,7 +2,7 @@
   <div class="sidebar-page">
     <section class="sidebar-layout">
       <GameBar :gamesData="scoreboardData.games"></GameBar>
-      <div v-if="currentGameData.basicGameData.vTeam.score!==''" class="container">
+      <div v-if="currentGameData!=={}" class="container">
         <b-field grouped position="is-centered">
           <figure class="image is5by5" :id="hTeamLogo"></figure>
           <p class="is-7">{{ currentGameData.basicGameData.hTeam.score }}-{{ currentGameData.basicGameData.vTeam.score }}</p>
@@ -98,10 +98,10 @@ export default {
       return this.$store.getters.teamsData[this.currentGameData.basicGameData.vTeam.triCode][0]
     },
     getUrl () {
-      return this.$store.getters.baseUrl + this.$store.getters.dateToday + this.$store.getters.scoreboardSuffix
+      return this.$store.getters.baseUrl + this.$route.params.date + this.$store.getters.scoreboardSuffix
     },
     getGameUrl () {
-      return this.$store.getters.baseUrl + this.$store.getters.dateToday + '/' + this.$route.params.id + '_boxscore.json/'
+      return this.$store.getters.baseUrl + this.$route.params.date + '/' + this.$route.params.id + '_boxscore.json/'
     },
     hTeamBoxScore () {
       return this.currentGameData.stats.activePlayers.filter((player) => {
