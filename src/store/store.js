@@ -302,13 +302,20 @@ export const store = new Vuex.Store({
     },
     setDates (state) {
       let date = new Date()
-      state.dateToday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + date.getDate()).slice(-2)
-      state.dateYesterday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + (date.getDate() - 1)).slice(-2)
+      let yesterday = new Date(date)
+      let dateNow = date.toISOString().slice(0,10)
+      state.dateToday = dateNow.replaceAll("-", "")
+      yesterday.setDate(yesterday.getDate() - 1)
+      state.dateYesterday = yesterday.toISOString().slice(0,10).replaceAll("-", "")
     },
     setDatesWhenYesterdayGameNotOver (state) {
       let date = new Date()
-      state.dateToday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + (date.getDate() - 1)).slice(-2)
-      state.dateYesterday = date.getFullYear() + ("0"+(date.getMonth()+1)).slice(-2) + ("0" + (date.getDate() - 2)).slice(-2)
+      let today = new Date(date)
+      today.setDate(today.getDate() - 1)
+      state.dateToday = today.toISOString().slice(0, 10).replaceAll("-", "")
+      let yesterday = new Date(date)
+      yesterday.setDate(yesterday.getDate() - 2)
+      state.dateYesterday = yesterday.toISOString().slice(0, 10).replaceAll("-", "")
     }
   },
   actions: {
