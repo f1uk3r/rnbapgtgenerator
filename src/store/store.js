@@ -17,21 +17,21 @@ export const store = new Vuex.Store({
       ],
       "BKN": [
         "Brooklyn Nets",
-        "02",
-        "boston-celtics-",
-        "http://np.reddit.com/r/bostonceltics",
-        "1610612738",
-        "bkn",
-        "bostonceltics"
-      ],
-      "BOS": [
-        "Boston Celtics",
         "17",
         "brooklyn-nets-",
         "http://np.reddit.com/r/gonets",
+        "1610612738",
+        "bkn",
+        "gonets"
+      ],
+      "BOS": [
+        "Boston Celtics",
+        "02",
+        "boston-celtics-",
+        "http://np.reddit.com/r/bostonceltics",
         "1610612751",
         "bos",
-        "gonets"
+        "bostonceltics"
       ],
       "CHA": [
         "Charlotte Hornets",
