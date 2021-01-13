@@ -6,14 +6,14 @@ import 'buefy/dist/buefy.css'
 import axios from 'axios'
 import { store } from './store/store.js'
 import router from './router'
-import VueAnalytics from 'vue-analytics'
+import VueGtag from 'vue-gtag'
 
 Vue.config.productionTip = false
 Vue.use(Buefy)
 Vue.use(axios)
 Vue.use(Vuex)
-Vue.use(VueAnalytics, {
-  id: 'UA-186976504-1'
+Vue.use(VueGtag, {
+  config: { id: 'UA-186976504-1' }
 })
 
 new Vue({
