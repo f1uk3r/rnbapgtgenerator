@@ -14,7 +14,7 @@ Vue.use(axios)
 Vue.use(Vuex)
 Vue.use(VueGtag, {
   config: { id: 'UA-186976504-1' }
-})
+}, router)
 
 new Vue({
   render: h => h(App),
