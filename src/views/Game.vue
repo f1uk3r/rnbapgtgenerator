@@ -77,6 +77,17 @@ export default {
       scoreboardInterval: null
     }
   },
+  metaInfo () {
+    return {
+      title: `${this.hTeam} ${this.vTeam} box score for reddit: PGT Generator`,
+      meta: [
+        { name: 'description', content: 'Generate complete NBA boxscore and post PGT on reddit with proper format' },
+        { property: 'og:title', content: 'r/nba PGT generator - NBA Boxscore for Reddit' },
+        { property: 'og:site-name', content: 'r/nba PGT generator' },
+        { property: 'og:type', content: 'website'}
+      ]
+    }
+  },
   computed: {
     ...mapGetters([
       'dateToday',

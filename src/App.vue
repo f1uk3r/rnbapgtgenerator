@@ -8,6 +8,22 @@
   </div>
 </template>
 
+<script>
+export default {
+  metaInfo() {
+    return {
+      title: "r/nba PGT Generator: NBA Box score for reddit",
+      meta: [
+        { name: 'description', content: 'Generate complete NBA box score and post PGT on reddit with proper format' },
+        { property: 'og:title', content: 'r/nba PGT generator - NBA Boxscore for Reddit' },
+        { property: 'og:site-name', content: 'r/nba PGT generator' },
+        { property: 'og:type', content: 'website'}
+      ]
+    }
+  }
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -7,11 +7,13 @@ import axios from 'axios'
 import { store } from './store/store.js'
 import router from './router'
 import VueGtag from 'vue-gtag'
+import VueMeta from 'vue-meta'
 
 Vue.config.productionTip = false
 Vue.use(Buefy)
 Vue.use(axios)
 Vue.use(Vuex)
+Vue.use(VueMeta)
 Vue.use(VueGtag, {
   config: { id: 'UA-186976504-1' }
 }, router)
