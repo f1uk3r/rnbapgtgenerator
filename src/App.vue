@@ -12,10 +12,10 @@
 export default {
   metaInfo() {
     return {
-      title: "r/nba PGT Generator: NBA Box score for reddit",
+      title: "r/nba PGT Generator: NBA Box score generator for reddit",
       meta: [
-        { name: 'description', content: 'Generate complete NBA box score and post PGT on reddit with proper format' },
-        { property: 'og:title', content: 'r/nba PGT generator - NBA Boxscore for Reddit' },
+        { name: 'description', content: 'NBA Box Score Generator: Generate complete NBA box score and post PGT on reddit with proper format' },
+        { property: 'og:title', content: 'r/nba PGT generator - NBA Box score generator for Reddit' },
         { property: 'og:site-name', content: 'r/nba PGT generator' },
         { property: 'og:type', content: 'website'}
       ]
