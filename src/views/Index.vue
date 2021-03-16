@@ -11,6 +11,14 @@
           <IndexCard :gameData="game" />
         </router-link>
       </b-tab-item>
+      <b-tab-item label="About Project">
+        <div class="content">
+          <h1>Box score generator</h1>
+          <p>Box score generator to be used to submit post-game thread on r/nba and other NBA subreddits.</p>
+          <p>Just click the buttons at the bottom of the respective game and get redirected to r/nba and team subreddits respectively</p>
+          <p>Found some bugs in the website? Report it on <a href="https://github.com/f1uk3r/rnbapgtgenerator">Github</a>, send me a PM on <a href="https://www.reddit.com/user/f1uk3r/">Reddit</a></p>
+        </div>
+      </b-tab-item>
     </b-tabs>
   </div>
 </template>
