@@ -14,6 +14,7 @@ export default {
     return {
       title: "r/nba PGT Generator: NBA Box score generator for reddit",
       meta: [
+        { name: 'google-site-verification', content='UvVX21DKezblQnU__jtxPNwKe1cchG0tQLoiWFURkcE'},
         { name: 'description', content: 'NBA Box Score Generator: Generate complete NBA box score and post PGT on reddit with proper format' },
         { property: 'og:title', content: 'r/nba PGT generator - NBA Box score generator for Reddit' },
         { property: 'og:site-name', content: 'r/nba PGT generator' },
