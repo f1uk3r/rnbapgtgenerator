@@ -30,11 +30,12 @@ export default {
       const basicData = this.gameData.basicGameData
       const gameStats = this.gameData.stats
       const boxscoreData = gameStats.activePlayers
+      const nbaMatchupUrlString = `${basicData.vTeam.triCode.toLowerCase()}-vs-${basicData.hTeam.triCode.toLowerCase()}-${basicData.gameId}/box-score#box-score`;
       let body = `
 ||		
 |:-:|		
 |[](/${basicData.vTeam.triCode}) **${basicData.vTeam.score} -  ${basicData.hTeam.score}** [](/${basicData.hTeam.triCode})|
-|**Box Scores: [NBA](http://www.nba.com/games/${this.$store.getters.dateToday}/${basicData.vTeam.triCode}${basicData.hTeam.triCode}#/boxscore) & [Yahoo](http://sports.yahoo.com/nba/${this.$store.getters.teamsData[basicData.vTeam.triCode][2]}${this.$store.getters.teamsData[basicData.hTeam.triCode][2]}${this.$store.getters.dateToday}${this.$store.getters.teamsData[basicData.hTeam.triCode][1]})**|
+|**Box Scores: [NBA](http://www.nba.com/game/${nbaMatchupUrlString}) & [Yahoo](http://sports.yahoo.com/nba/${this.$store.getters.teamsData[basicData.vTeam.triCode][2]}${this.$store.getters.teamsData[basicData.hTeam.triCode][2]}${this.$store.getters.dateToday}${this.$store.getters.teamsData[basicData.hTeam.triCode][1]})**|
 
 
 ||
