@@ -10,7 +10,7 @@
         Submit r/nba Post Game Thread
       </b-button>
       <b-button tag="a" :href="vTeamSubmissionUrl" type="is-primary" target="_blank">
-        Submit r/{{ this.$store.getters.teamsData[this.gameData.basicGameData.vTeam.triCode][6] }}Post Game Thread
+        Submit r/{{ this.$store.getters.teamsData[this.gameData.basicGameData.vTeam.triCode][6] }} Post Game Thread
       </b-button>
       <b-button tag="a" :href="hTeamSubmissionUrl" type="is-primary" target="_blank">
         Submit r/{{ this.$store.getters.teamsData[this.gameData.basicGameData.hTeam.triCode][6] }} Post Game Thread
@@ -32,18 +32,13 @@ export default {
       const boxscoreData = gameStats.activePlayers
       const nbaMatchupUrlString = `${basicData.vTeam.triCode.toLowerCase()}-vs-${basicData.hTeam.triCode.toLowerCase()}-${basicData.gameId}/box-score#box-score`;
       let body = `
-||		
-|:-:|		
-|[](/${basicData.vTeam.triCode}) **${basicData.vTeam.score} -  ${basicData.hTeam.score}** [](/${basicData.hTeam.triCode})|
-|**Box Scores: [NBA](http://www.nba.com/game/${nbaMatchupUrlString}) & [Yahoo](http://sports.yahoo.com/nba/${this.$store.getters.teamsData[basicData.vTeam.triCode][2]}${this.$store.getters.teamsData[basicData.hTeam.triCode][2]}${this.$store.getters.dateToday}${this.$store.getters.teamsData[basicData.hTeam.triCode][1]})**|
+# ${basicData.vTeam.triCode} ${basicData.vTeam.score} - ${basicData.hTeam.score} ${basicData.hTeam.triCode}
 
+|**Box Score**|**Location**|**Clock**|**Officials**|
+|:--|:--|:--|:--|
+|[NBA](http://www.nba.com/game/${nbaMatchupUrlString})/[Yahoo](http://sports.yahoo.com/nba/${this.$store.getters.teamsData[basicData.vTeam.triCode][2]}${this.$store.getters.teamsData[basicData.hTeam.triCode][2]}${this.$store.getters.dateToday}${this.$store.getters.teamsData[basicData.hTeam.triCode][1]})|${basicData.arena.name} (${basicData.attendance})|${basicData.clock}|${basicData.officials.formatted[0].firstNameLastName}, ${basicData.officials.formatted[1].firstNameLastName} and ${basicData.officials.formatted[2].firstNameLastName}|
 
-||
-|:-:|											
-|&nbsp;|		
-|**GAME SUMMARY**|
-|**Location:** ${basicData.arena.name}(${basicData.attendance}), **Clock:** ${basicData.clock}|
-|**Officials:** ${basicData.officials.formatted[0].firstNameLastName}, ${basicData.officials.formatted[1].firstNameLastName} and ${basicData.officials.formatted[2].firstNameLastName}|
+#### GAME SUMMARY
 
 |**Team**|**Q1**|**Q2**|**Q3**|**Q4**|**`
       if (basicData.vTeam.linescore.length === 4) {
@@ -77,25 +72,17 @@ export default {
         body = body + `${basicData.hTeam.score}|`
       }
       body = body + `
-      
-||		
-|:-:|		
-|&nbsp;|		
-|**TEAM STATS**|
+
+#### TEAM STATS
 
 |**Team**|**PTS**|**FG**|**FG%**|**3P**|**3P%**|**FT**|**FT%**|**OREB**|**TREB**|**AST**|**PF**|**STL**|**TO**|**BLK**|
 |:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|
 |${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}|${gameStats.vTeam.totals.points}|${gameStats.vTeam.totals.fgm}-${gameStats.vTeam.totals.fga}|${gameStats.vTeam.totals.fgp}%|${gameStats.vTeam.totals.tpm}-${gameStats.vTeam.totals.tpa}|${gameStats.vTeam.totals.tpp}%|${gameStats.vTeam.totals.ftm}-${gameStats.vTeam.totals.fta}|${gameStats.vTeam.totals.ftp}%|${gameStats.vTeam.totals.offReb}|${gameStats.vTeam.totals.totReb}|${gameStats.vTeam.totals.assists}|${gameStats.vTeam.totals.pFouls}|${gameStats.vTeam.totals.steals}|${gameStats.vTeam.totals.turnovers}|${gameStats.vTeam.totals.blocks}|
 |${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}|${gameStats.hTeam.totals.points}|${gameStats.hTeam.totals.fgm}-${gameStats.hTeam.totals.fga}|${gameStats.hTeam.totals.fgp}%|${gameStats.hTeam.totals.tpm}-${gameStats.hTeam.totals.tpa}|${gameStats.hTeam.totals.tpp}%|${gameStats.hTeam.totals.ftm}-${gameStats.hTeam.totals.fta}|${gameStats.hTeam.totals.ftp}%|${gameStats.hTeam.totals.offReb}|${gameStats.hTeam.totals.totReb}|${gameStats.hTeam.totals.assists}|${gameStats.hTeam.totals.pFouls}|${gameStats.hTeam.totals.steals}|${gameStats.hTeam.totals.turnovers}|${gameStats.hTeam.totals.blocks}|
 
-||
-|:-:|
-|&nbsp;|
-|**PLAYER STATS**|
+#### PLAYER STATS
 
-||||||||||||||||
-|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|
-**[](/${basicData.vTeam.triCode}) ${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n`
+|**${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|\n`
       for (let i = 0; i < boxscoreData.length; i++) {
         const playerStat = boxscoreData[i]
         if (playerStat.teamId === basicData.vTeam.teamId && playerStat.pos !== "") {
@@ -104,7 +91,7 @@ export default {
           body = body + `|${playerStat.firstName} ${playerStat.lastName}|${playerStat.min}|${playerStat.points}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|\n`
         }
       }
-      body = body + `**[](/${basicData.hTeam.triCode}) ${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n`
+      body = body + `|**${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n`
       for (let i = 0; i < boxscoreData.length; i++) {
         const playerStat = boxscoreData[i]
         if (playerStat.teamId !== basicData.vTeam.teamId && playerStat.pos !== "") {
@@ -114,10 +101,8 @@ export default {
         }
       }
       body = body + `
-      
-||
-|:-:|
-|^[rnbapgtgenerator](https://f1uk3r.github.io/rnbapgtgenerator/) ^by ^/u/f1uk3r|`
+^([rnbapgtgenerator](https://f1uk3r.github.io/rnbapgtgenerator/) by /u/f1uk3r)`
+
 return body
     },
     computeRedditTitle () {
@@ -175,4 +160,3 @@ return body
   }
 }
 </script>
-
