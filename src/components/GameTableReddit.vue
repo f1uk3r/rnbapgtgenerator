@@ -27,11 +27,12 @@ export default {
   },
   computed: {
     computeRedditBoxscore () {
+      const nbaMatchupUrlString = `${basicData.vTeam.triCode.toLowerCase()}-vs-${basicData.hTeam.triCode.toLowerCase()}-${basicData.gameId}/box-score#box-score`;
       let body = `
 ||		
 |:-:|		
 |[](/${this.gameData.awayTeam.teamTricode}) **${this.gameData.awayTeam.score} -  ${this.gameData.homeTeam.score}** [](/${this.gameData.homeTeam.teamTricode})|
-|**Box Scores: [NBA](http://www.nba.com/games/${this.$store.getters.dateToday}/${this.gameData.awayTeam.teamTricode}${this.gameData.homeTeam.teamTricode}#/boxscore) & [Yahoo](http://sports.yahoo.com/nba/${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][2]}${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][2]}${this.$store.getters.dateToday}${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][1]})**|
+|**Box Scores: [NBA](http://www.nba.com/game/${nbaMatchupUrlString}) & [Yahoo](http://sports.yahoo.com/nba/${this.$store.getters.teamsData[basicData.vTeam.triCode][2]}${this.$store.getters.teamsData[basicData.hTeam.triCode][2]}${this.$store.getters.dateToday}${this.$store.getters.teamsData[basicData.hTeam.triCode][1]})**|
 
 
 ||
