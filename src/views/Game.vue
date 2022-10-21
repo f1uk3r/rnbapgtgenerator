@@ -5,13 +5,13 @@
       <div v-if="currentGameData!=={}" class="container">
         <b-field grouped position="is-centered">
           <figure class="image is5by5" :id="hTeamLogo"></figure>
-          <p class="is-7">{{ currentGameData.basicGameData.hTeam.score }}-{{ currentGameData.basicGameData.vTeam.score }}</p>
+          <p class="is-7">{{ currentGameData.homeTeam.score }}-{{ currentGameData.awayTeam.score }}</p>
           <figure class="image is5by5" :id="vTeamLogo"></figure>
         </b-field>
         <b-field position="is-centered">
-          <p v-if="currentGameData.basicGameData.period.current>1 & currentGameData.basicGameData.clock!==''">{{  currentGameData.basicGameData.clock  }} {{  currentGameData.basicGameData.period.current  }}Q</p>
-          <p v-else-if="currentGameData.basicGameData.period.current===1 && currentGameData.basicGameData.clock!==''">{{  currentGameData.basicGameData.clock  }} {{  currentGameData.basicGameData.period.current  }}Q</p>
-          <p v-else-if="currentGameData.basicGameData.period.current===1 && currentGameData.basicGameData.clock===''">{{  currentGameData.basicGameData.startTimeEastern  }}</p>
+          <p v-if="currentGameData.period>1 & currentGameData.gameClock!==''">{{  currentGameData.gameClock  }} {{  currentGameData.period  }}Q</p>
+          <p v-else-if="currentGameData.period===1 && currentGameData.gameClock!==''">{{  currentGameData.gameClock  }} {{  currentGameData.period  }}Q</p>
+          <p v-else-if="currentGameData.period===1 && currentGameData.gameClock===''">{{  currentGameData.gameEt  }}</p>
         </b-field>
 
         <div class="card game-box-score-h-team">
@@ -91,44 +91,40 @@ export default {
   computed: {
     ...mapGetters([
       'dateToday',
-      'dateYesterday',
+      // 'dateYesterday',
       'teamsData',
       'baseUrl',
       'scoreboardSuffix'
     ]),
     hTeamLogo () {
-      return this.$store.getters.teamsData[this.currentGameData.basicGameData.hTeam.triCode][5]
+      return this.$store.getters.teamsData[this.currentGameData.homeTeam.teamTricode][5]
     },
     vTeamLogo () {
-      return this.$store.getters.teamsData[this.currentGameData.basicGameData.vTeam.triCode][5]
+      return this.$store.getters.teamsData[this.currentGameData.awayTeam.teamTricode][5]
     },
     hTeam () {
-      return this.$store.getters.teamsData[this.currentGameData.basicGameData.hTeam.triCode][0]
+      return this.$store.getters.teamsData[this.currentGameData.homeTeam.teamTricode][0]
     },
     vTeam () {
-      return this.$store.getters.teamsData[this.currentGameData.basicGameData.vTeam.triCode][0]
+      return this.$store.getters.teamsData[this.currentGameData.awayTeam.teamTricode][0]
     },
     getUrl () {
-      return this.$store.getters.baseUrl + this.$route.params.date + this.$store.getters.scoreboardSuffix
+      return this.$store.getters.baseUrl + this.$store.getters.scoreboardSuffix
     },
     getGameUrl () {
-      return this.$store.getters.baseUrl + this.$route.params.date + '/' + this.$route.params.id + '_boxscore.json/'
+      return this.$store.getters.baseUrl + 'boxscore/boxscore_' + this.$route.params.id + '.json'
     },
     hTeamBoxScore () {
-      return this.currentGameData.stats.activePlayers.filter((player) => {
-        return player.teamId === this.currentGameData.basicGameData.hTeam.teamId
-      })
+      return this.currentGameData.homeTeam.players
     },
     vTeamBoxScore () {
-      return this.currentGameData.stats.activePlayers.filter((player) => {
-        return player.teamId === this.currentGameData.basicGameData.vTeam.teamId
-      })
+      return this.currentGameData.awayTeam.players
     }
   },
   mounted () {
     this.$store.dispatch('initialiseDates')
 
-    this.$store.dispatch('checkYesterdayLastGameEnd')
+    // this.$store.dispatch('checkYesterdayLastGameEnd')
 
     this.getScoreboardData()
 
@@ -143,23 +139,23 @@ export default {
       } return someStat
     },
     getScoreboardData () {
-      axios.get(this.getUrl, {crossDomain: true}).then((response) => {
-        this.scoreboardData = response.data
+      axios.get(this.getUrl).then((response) => {
+        this.scoreboardData = response.data.scoreboard
       })
     },
     getCurrentGameData () {
-      axios.get(this.getGameUrl, {crossDomain: true}).then((response) => {
-        this.currentGameData = response.data
+      axios.get(this.getGameUrl).then((response) => {
+        this.currentGameData = response.data.game
       })
     }
   },
   created () {
     this.currentGameInterval = setInterval(() => {
       this.getCurrentGameData()
-    }, 5000),
+    }, 50000),
     this.scoreboardInterval = setInterval(() => {
       this.getScoreboardData()
-    }, 5000)
+    }, 50000)
   },
   destroyed () {
     clearInterval(this.currentGameInterval)

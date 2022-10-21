@@ -277,26 +277,26 @@ export const store = new Vuex.Store({
         "washingtonwizards"
       ],
     },
-    dateYesterday: '',
+    // dateYesterday: '',
     dateToday: '',
-    yesterdayLastGameEnd: false,
+    // yesterdayLastGameEnd: false,
     todayLastGameEnd: false,
-    baseUrl: 'https://data.nba.net/prod/v1/',
-    scoreboardSuffix: '/scoreboard.json/'
+    baseUrl: 'https://cdn.nba.com/static/json/liveData/',
+    scoreboardSuffix: 'scoreboard/todaysScoreboard_00.json'
   },
   getters: {
     teamsData: state => state.teamsData,
-    dateYesterday: state => state.dateYesterday,
+    // dateYesterday: state => state.dateYesterday,
     dateToday: state => state.dateToday,
-    yesterdayLastGameEnd: state => state.yesterdayLastGameEnd,
+    // yesterdayLastGameEnd: state => state.yesterdayLastGameEnd,
     todayLastGameEnd: state => state.todayLastGameEnd,
     baseUrl: state => state.baseUrl,
     scoreboardSuffix: state => state.scoreboardSuffix
   },
   mutations: {
-    setYesterdayLastGameEnd (state) {
-      state.yesterdayLastGameEnd = true
-    },
+    // setYesterdayLastGameEnd (state) {
+    //   state.yesterdayLastGameEnd = true
+    // },
     setTodayGameEnd (state) {
       state.todayLastGameEnd = true
     },
@@ -308,15 +308,15 @@ export const store = new Vuex.Store({
       yesterday.setDate(yesterday.getDate() - 1)
       state.dateYesterday = yesterday.toISOString().slice(0,10).replaceAll("-", "")
     },
-    setDatesWhenYesterdayGameNotOver (state) {
-      let date = new Date()
-      let today = new Date(date)
-      today.setDate(today.getDate() - 1)
-      state.dateToday = today.toISOString().slice(0, 10).replaceAll("-", "")
-      let yesterday = new Date(date)
-      yesterday.setDate(yesterday.getDate() - 2)
-      state.dateYesterday = yesterday.toISOString().slice(0, 10).replaceAll("-", "")
-    }
+    // setDatesWhenYesterdayGameNotOver (state) {
+    //   let date = new Date()
+    //   let today = new Date(date)
+    //   today.setDate(today.getDate() - 1)
+    //   state.dateToday = today.toISOString().slice(0, 10).replaceAll("-", "")
+    //   let yesterday = new Date(date)
+    //   yesterday.setDate(yesterday.getDate() - 2)
+    //   state.dateYesterday = yesterday.toISOString().slice(0, 10).replaceAll("-", "")
+    // }
   },
   actions: {
     initialiseDates (context) {
@@ -325,22 +325,21 @@ export const store = new Vuex.Store({
     initialiseDatesWhenYesterdayGameNotOver (context) {
       context.commit('setDatesWhenYesterdayGameNotOver')
     },
-    checkYesterdayLastGameEnd (context) {
-      axios.get(this.state.baseUrl + this.state.dateYesterday + this.state.scoreboardSuffix, {
-        crossDomain: true
-      }).then((response) => {
-          let lastGameSummaryData = response.data.games[response.data.numGames - 1]
-          if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== lastGameSummaryData.hTeam.score)) {
-            context.commit('setDates')
-          }
-          else {
-            console.log('hello')
-            context.commit('setDatesWhenYesterdayGameNotOver')
-          }
-        })
-    },
+    // checkYesterdayLastGameEnd (context) {
+    //   axios.get(this.state.baseUrl + this.state.scoreboardSuffix, {
+    //     crossDomain: true
+    //   }).then((response) => {
+    //       let lastGameSummaryData = response.data.games[response.data.numGames - 1]
+    //       if ((lastGameSummaryData.clock === '' || lastGameSummaryData.clock === "0.0") && lastGameSummaryData.period.current >= 4 && (lastGameSummaryData.vTeam.score !== lastGameSummaryData.hTeam.score)) {
+    //         context.commit('setDates')
+    //       }
+    //       else {
+    //         context.commit('setDatesWhenYesterdayGameNotOver')
+    //       }
+    //     })
+    // },
     checkTodayLastGameEnd (context) {
-      axios.get(this.state.baseUrl + this.state.dateToday + this.state.scoreboardSuffix, {
+      axios.get(this.state.baseUrl + this.state.scoreboardSuffix, {
         crossDomain: true
       }).then((response) => {
           let lastGameSummaryData = response.data.games[response.data.numGames - 1]

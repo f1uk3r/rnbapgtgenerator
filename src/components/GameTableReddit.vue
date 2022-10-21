@@ -10,10 +10,10 @@
         Submit r/nba Post Game Thread
       </b-button>
       <b-button tag="a" :href="vTeamSubmissionUrl" type="is-primary" target="_blank">
-        Submit r/{{ this.$store.getters.teamsData[this.gameData.basicGameData.vTeam.triCode][6] }}Post Game Thread
+        Submit r/{{ this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][6] }}Post Game Thread
       </b-button>
       <b-button tag="a" :href="hTeamSubmissionUrl" type="is-primary" target="_blank">
-        Submit r/{{ this.$store.getters.teamsData[this.gameData.basicGameData.hTeam.triCode][6] }} Post Game Thread
+        Submit r/{{ this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][6] }} Post Game Thread
       </b-button>
     </div>
   </div>
@@ -27,53 +27,50 @@ export default {
   },
   computed: {
     computeRedditBoxscore () {
-      const basicData = this.gameData.basicGameData
-      const gameStats = this.gameData.stats
-      const boxscoreData = gameStats.activePlayers
       let body = `
 ||		
 |:-:|		
-|[](/${basicData.vTeam.triCode}) **${basicData.vTeam.score} -  ${basicData.hTeam.score}** [](/${basicData.hTeam.triCode})|
-|**Box Scores: [NBA](http://www.nba.com/games/${this.$store.getters.dateToday}/${basicData.vTeam.triCode}${basicData.hTeam.triCode}#/boxscore) & [Yahoo](http://sports.yahoo.com/nba/${this.$store.getters.teamsData[basicData.vTeam.triCode][2]}${this.$store.getters.teamsData[basicData.hTeam.triCode][2]}${this.$store.getters.dateToday}${this.$store.getters.teamsData[basicData.hTeam.triCode][1]})**|
+|[](/${this.gameData.awayTeam.teamTricode}) **${this.gameData.awayTeam.score} -  ${this.gameData.homeTeam.score}** [](/${this.gameData.homeTeam.teamTricode})|
+|**Box Scores: [NBA](http://www.nba.com/games/${this.$store.getters.dateToday}/${this.gameData.awayTeam.teamTricode}${this.gameData.homeTeam.teamTricode}#/boxscore) & [Yahoo](http://sports.yahoo.com/nba/${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][2]}${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][2]}${this.$store.getters.dateToday}${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][1]})**|
 
 
 ||
 |:-:|											
 |&nbsp;|		
 |**GAME SUMMARY**|
-|**Location:** ${basicData.arena.name}(${basicData.attendance}), **Clock:** ${basicData.clock}|
-|**Officials:** ${basicData.officials.formatted[0].firstNameLastName}, ${basicData.officials.formatted[1].firstNameLastName} and ${basicData.officials.formatted[2].firstNameLastName}|
+|**Location:** ${this.gameData.arena.arenaName}(${this.gameData.attendance})|
+|**Officials:** ${this.gameData.officials[0].name}, ${this.gameData.officials[1].name} and ${this.gameData.officials[2].name}|
 
 |**Team**|**Q1**|**Q2**|**Q3**|**Q4**|**`
-      if (basicData.vTeam.linescore.length === 4) {
+      if (this.gameData.awayTeam.periods.length === 4) {
         body = body + `Total**|
 |:---|:--|:--|:--|:--|:--|
-|${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}|${basicData.vTeam.linescore[0].score}|${basicData.vTeam.linescore[1].score}|${basicData.vTeam.linescore[2].score}|${basicData.vTeam.linescore[3].score}|${basicData.vTeam.score}|
-|${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}|${basicData.hTeam.linescore[0].score}|${basicData.hTeam.linescore[1].score}|${basicData.hTeam.linescore[2].score}|${basicData.hTeam.linescore[3].score}|${basicData.hTeam.score}|`
-      } else if (basicData.vTeam.linescore.length === 5) {
+|${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][0]}|${this.gameData.awayTeam.periods[0].score}|${this.gameData.awayTeam.periods[1].score}|${this.gameData.awayTeam.periods[2].score}|${this.gameData.awayTeam.periods[3].score}|${this.gameData.awayTeam.score}|
+|${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][0]}|${this.gameData.homeTeam.periods[0].score}|${this.gameData.homeTeam.periods[1].score}|${this.gameData.homeTeam.periods[2].score}|${this.gameData.homeTeam.periods[3].score}|${this.gameData.homeTeam.score}|`
+      } else if (this.gameData.awayTeam.periods.length === 5) {
         body = body + `OT**|**Total**|
 |:---|:--|:--|:--|:--|:--|
-|${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}|${basicData.vTeam.linescore[0].score}|${basicData.vTeam.linescore[1].score}|${basicData.vTeam.linescore[2].score}|${basicData.vTeam.linescore[3].score}|${basicData.vTeam.linescore[4].score}|${basicData.vTeam.score}|
-|${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}|${basicData.hTeam.linescore[0].score}|${basicData.hTeam.linescore[1].score}|${basicData.hTeam.linescore[2].score}|${basicData.hTeam.linescore[3].score}|${basicData.hTeam.linescore[4].score}|${basicData.hTeam.score}|`
-      } else if (basicData.vTeam.linescore.length > 5) {
-        for (let i = 4; i < basicData.vTeam.linescore.length; i++) {
+|${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][0]}|${this.gameData.awayTeam.periods[0].score}|${this.gameData.awayTeam.periods[1].score}|${this.gameData.awayTeam.periods[2].score}|${this.gameData.awayTeam.periods[3].score}|${this.gameData.awayTeam.periods[4].score}|${this.gameData.awayTeam.score}|
+|${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][0]}|${this.gameData.homeTeam.periods[0].score}|${this.gameData.homeTeam.periods[1].score}|${this.gameData.homeTeam.periods[2].score}|${this.gameData.homeTeam.periods[3].score}|${this.gameData.homeTeam.periods[4].score}|${this.gameData.homeTeam.score}|`
+      } else if (this.gameData.awayTeam.periods.length > 5) {
+        for (let i = 4; i < this.gameData.awayTeam.periods.length; i++) {
           body = body + `OT${i-3}**|**`
         }
         body = body + `Total**|
 |:---|:--|:--|:--|:--|:--|`
-        for (let i = 4; i < basicData.vTeam.linescore.length; i++) {
+        for (let i = 4; i < this.gameData.awayTeam.periods.length; i++) {
           body = body + ':--|'
         }
-        body = body + `\n|${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}|`
-        for (let i = 0; basicData.vTeam.linescore.length; i++) {
-          body = body + `${basicData.vTeam.linescore[i].score}|`
+        body = body + `\n|${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][0]}|`
+        for (let i = 0; this.gameData.awayTeam.periods.length; i++) {
+          body = body + `${this.gameData.awayTeam.periods[i].score}|`
         }
-        body = body + `${basicData.vTeam.score}|
-|${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}|`
-        for (let i = 0; basicData.hTeam.linescore.length; i++) {
-          body = body + `${basicData.hTeam.linescore[i].score}|`
+        body = body + `${this.gameData.awayTeam.score}|
+|${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][0]}|`
+        for (let i = 0; this.gameData.homeTeam.periods.length; i++) {
+          body = body + `${this.gameData.homeTeam.periods[i].score}|`
         }
-        body = body + `${basicData.hTeam.score}|`
+        body = body + `${this.gameData.homeTeam.score}|`
       }
       body = body + `
       
@@ -84,8 +81,8 @@ export default {
 
 |**Team**|**PTS**|**FG**|**FG%**|**3P**|**3P%**|**FT**|**FT%**|**OREB**|**TREB**|**AST**|**PF**|**STL**|**TO**|**BLK**|
 |:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|
-|${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}|${gameStats.vTeam.totals.points}|${gameStats.vTeam.totals.fgm}-${gameStats.vTeam.totals.fga}|${gameStats.vTeam.totals.fgp}%|${gameStats.vTeam.totals.tpm}-${gameStats.vTeam.totals.tpa}|${gameStats.vTeam.totals.tpp}%|${gameStats.vTeam.totals.ftm}-${gameStats.vTeam.totals.fta}|${gameStats.vTeam.totals.ftp}%|${gameStats.vTeam.totals.offReb}|${gameStats.vTeam.totals.totReb}|${gameStats.vTeam.totals.assists}|${gameStats.vTeam.totals.pFouls}|${gameStats.vTeam.totals.steals}|${gameStats.vTeam.totals.turnovers}|${gameStats.vTeam.totals.blocks}|
-|${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}|${gameStats.hTeam.totals.points}|${gameStats.hTeam.totals.fgm}-${gameStats.hTeam.totals.fga}|${gameStats.hTeam.totals.fgp}%|${gameStats.hTeam.totals.tpm}-${gameStats.hTeam.totals.tpa}|${gameStats.hTeam.totals.tpp}%|${gameStats.hTeam.totals.ftm}-${gameStats.hTeam.totals.fta}|${gameStats.hTeam.totals.ftp}%|${gameStats.hTeam.totals.offReb}|${gameStats.hTeam.totals.totReb}|${gameStats.hTeam.totals.assists}|${gameStats.hTeam.totals.pFouls}|${gameStats.hTeam.totals.steals}|${gameStats.hTeam.totals.turnovers}|${gameStats.hTeam.totals.blocks}|
+|${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][0]}|${this.gameData.awayTeam.statistics.points}|${this.gameData.awayTeam.statistics.fieldGoalsMade}-${this.gameData.awayTeam.statistics.fieldGoalsAttempted}|${this.gameData.awayTeam.statistics.fieldGoalsPercentage}%|${this.gameData.awayTeam.statistics.threePointersMade}-${this.gameData.awayTeam.statistics.threePointersAttempted}|${this.gameData.awayTeam.statistics.threePointersPercentage}%|${this.gameData.awayTeam.statistics.freeThrowsMade}-${this.gameData.awayTeam.statistics.freeThrowsAttempted}|${this.gameData.awayTeam.statistics.freeThrowsPercentage}%|${this.gameData.awayTeam.statistics.reboundsOffensive}|${this.gameData.awayTeam.statistics.reboundsTotal}|${this.gameData.awayTeam.statistics.assists}|${this.gameData.awayTeam.statistics.foulsPersonal}|${this.gameData.awayTeam.statistics.steals}|${this.gameData.awayTeam.statistics.turnovers}|${this.gameData.awayTeam.statistics.blocks}|
+|${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][0]}|${this.gameData.homeTeam.statistics.points}|${this.gameData.homeTeam.statistics.fieldGoalsMade}-${this.gameData.homeTeam.statistics.fieldGoalsAttempted}|${this.gameData.homeTeam.statistics.fieldGoalsPercentage}%|${this.gameData.homeTeam.statistics.threePointersMade}-${this.gameData.homeTeam.statistics.threePointersAttempted}|${this.gameData.homeTeam.statistics.threePointersPercentage}%|${this.gameData.homeTeam.statistics.freeThrowsMade}-${this.gameData.homeTeam.statistics.freeThrowsAttempted}|${this.gameData.homeTeam.statistics.freeThrowsPercentage}%|${this.gameData.homeTeam.statistics.reboundsOffensive}|${this.gameData.homeTeam.statistics.reboundsTotal}|${this.gameData.homeTeam.statistics.assists}|${this.gameData.homeTeam.statistics.foulsPersonal}|${this.gameData.homeTeam.statistics.steals}|${this.gameData.homeTeam.statistics.turnovers}|${this.gameData.homeTeam.statistics.blocks}|
 
 ||
 |:-:|
@@ -94,22 +91,22 @@ export default {
 
 ||||||||||||||||
 |:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|
-**[](/${basicData.vTeam.triCode}) ${this.$store.getters.teamsData[basicData.vTeam.triCode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n`
-      for (let i = 0; i < boxscoreData.length; i++) {
-        const playerStat = boxscoreData[i]
-        if (playerStat.teamId === basicData.vTeam.teamId && playerStat.pos !== "") {
-          body = body + `|${playerStat.firstName} ${playerStat.lastName}^${playerStat.pos}|${playerStat.min}|${playerStat.points}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|\n`
-        } else if (playerStat.teamId === basicData.vTeam.teamId && playerStat.pos === "") {
-          body = body + `|${playerStat.firstName} ${playerStat.lastName}|${playerStat.min}|${playerStat.points}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|\n`
+**[](/${this.gameData.awayTeam.teamTricode}) ${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n`
+      for (let i = 0; i < this.gameData.awayTeam.players.length; i++) {
+        const playerStat = this.gameData.awayTeam.players[i]
+        if (playerStat.position !== "") {
+          body = body + `|${playerStat.name}^${playerStat.position}|${playerStat.statistics.minutesCalculated}|${playerStat.statistics.points}|${playerStat.statistics.fieldGoalsMade}-${playerStat.statistics.fieldGoalsAttempted}|${playerStat.statistics.threePointersMade}-${playerStat.statistics.threePointersAttempted}|${playerStat.statistics.freeThrowsMade}-${playerStat.statistics.freeThrowsAttempted}|${playerStat.statistics.reboundsOffensive}|${playerStat.statistics.reboundsDefensive}|${playerStat.statistics.reboundsTotal}|${playerStat.statistics.assists}|${playerStat.statistics.steals}|${playerStat.statistics.blocks}|${playerStat.statistics.turnovers}|${playerStat.statistics.foulsPersonal}|${this.apendPlusMinus(playerStat.statistics.plusMinusPoints)}|\n`
+        } else if (playerStat.position === "") {
+          body = body + `|${playerStat.name}|${playerStat.statistics.minutesCalculated}|${playerStat.statistics.points}|${playerStat.statistics.fieldGoalsMade}-${playerStat.statistics.fieldGoalsAttempted}|${playerStat.statistics.threePointersMade}-${playerStat.statistics.threePointersAttempted}|${playerStat.statistics.freeThrowsMade}-${playerStat.statistics.freeThrowsAttempted}|${playerStat.statistics.reboundsOffensive}|${playerStat.statistics.reboundsDefensive}|${playerStat.statistics.reboundsTotal}|${playerStat.statistics.assists}|${playerStat.statistics.steals}|${playerStat.statistics.blocks}|${playerStat.statistics.turnovers}|${playerStat.statistics.foulsPersonal}|${this.apendPlusMinus(playerStat.statistics.plusMinusPoints)}|\n`
         }
       }
-      body = body + `**[](/${basicData.hTeam.triCode}) ${this.$store.getters.teamsData[basicData.hTeam.triCode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n`
-      for (let i = 0; i < boxscoreData.length; i++) {
-        const playerStat = boxscoreData[i]
-        if (playerStat.teamId !== basicData.vTeam.teamId && playerStat.pos !== "") {
-          body = body + `|${playerStat.firstName} ${playerStat.lastName}^${playerStat.pos}|${playerStat.min}|${playerStat.points}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|\n`
-        } else if (playerStat.teamId !== basicData.vTeam.teamId && playerStat.pos === "") {
-          body = body + `|${playerStat.firstName} ${playerStat.lastName}|${playerStat.min}|${playerStat.points}|${playerStat.fgm}-${playerStat.fga}|${playerStat.tpm}-${playerStat.tpa}|${playerStat.ftm}-${playerStat.fta}|${playerStat.offReb}|${playerStat.defReb}|${playerStat.totReb}|${playerStat.assists}|${playerStat.steals}|${playerStat.blocks}|${playerStat.turnovers}|${playerStat.pFouls}|${this.apendPlusMinus(playerStat.plusMinus)}|\n`
+      body = body + `**[](/${this.gameData.homeTeam.teamTricode}) ${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n`
+      for (let i = 0; i <  this.gameData.homeTeam.players.length; i++) {
+        const playerStat =  this.gameData.homeTeam.players[i]
+        if (playerStat.position !== "") {
+          body = body + `|${playerStat.name}^${playerStat.position}|${playerStat.statistics.minutesCalculated}|${playerStat.statistics.points}|${playerStat.statistics.fieldGoalsMade}-${playerStat.statistics.fieldGoalsAttempted}|${playerStat.statistics.threePointersMade}-${playerStat.statistics.threePointersAttempted}|${playerStat.statistics.freeThrowsMade}-${playerStat.statistics.freeThrowsAttempted}|${playerStat.statistics.reboundsOffensive}|${playerStat.statistics.reboundsDefensive}|${playerStat.statistics.reboundsTotal}|${playerStat.statistics.assists}|${playerStat.statistics.steals}|${playerStat.statistics.blocks}|${playerStat.statistics.turnovers}|${playerStat.statistics.foulsPersonal}|${this.apendPlusMinus(playerStat.statistics.plusMinusPoints)}|\n`
+        } else if (playerStat.position === "") {
+          body = body + `|${playerStat.name}|${playerStat.statistics.minutesCalculated}|${playerStat.statistics.points}|${playerStat.statistics.fieldGoalsMade}-${playerStat.statistics.fieldGoalsAttempted}|${playerStat.statistics.threePointersMade}-${playerStat.statistics.threePointersAttempted}|${playerStat.statistics.freeThrowsMade}-${playerStat.statistics.freeThrowsAttempted}|${playerStat.statistics.reboundsOffensive}|${playerStat.statistics.reboundsDefensive}|${playerStat.statistics.reboundsTotal}|${playerStat.statistics.assists}|${playerStat.statistics.steals}|${playerStat.statistics.blocks}|${playerStat.statistics.turnovers}|${playerStat.statistics.foulsPersonal}|${this.apendPlusMinus(playerStat.statistics.plusMinusPoints)}|\n`
         }
       }
       body = body + `
@@ -120,35 +117,34 @@ export default {
 return body
     },
     computeRedditTitle () {
-      const basicData = this.gameData.basicGameData
-      const vTeamScore = parseInt(basicData.vTeam.score)
-      const hTeamScore = parseInt(basicData.hTeam.score)
+      const vTeamScore = parseInt(this.gameData.awayTeam.score)
+      const hTeamScore = parseInt(this.gameData.homeTeam.score)
       let visitorTeam = 'not defined'
       let homeTeam = 'not defined'
       let title = '[Post Game Thread] The '
-      if (basicData.isGameActivated === false) {
-        visitorTeam = `${this.$store.getters.teamsData[basicData.vTeam.triCode][0]} (${basicData.vTeam.win}-${basicData.vTeam.loss})`
-        homeTeam = `${this.$store.getters.teamsData[basicData.hTeam.triCode][0]} (${basicData.hTeam.win}-${basicData.hTeam.loss})`
-      } else if ((basicData.isGameActivated == true) && (vTeamScore > hTeamScore) && (parseInt(basicData.vTeam.linescore.length) >= 4)) {
-        visitorTeam = `${this.$store.getters.teamsData[basicData.vTeam.triCode][0]} (${parseInt(basicData.vTeam.win) + 1}-${basicData.vTeam.loss})`
-        homeTeam = `${this.$store.getters.teamsData[basicData.hTeam.triCode][0]} (${basicData.hTeam.win}-${parseInt(basicData.hTeam.loss) + 1})`
-      } else if ((basicData.isGameActivated == true) && (vTeamScore < hTeamScore) && (parseInt(basicData.vTeam.linescore.length) >= 4)) {
-        visitorTeam = `${this.$store.getters.teamsData[basicData.vTeam.triCode][0]} (${basicData.vTeam.win}-${parseInt(basicData.vTeam.loss) + 1})`
-        homeTeam = `${this.$store.getters.teamsData[basicData.hTeam.triCode][0]} (${parseInt(basicData.hTeam.win) + 1}-${basicData.hTeam.loss})`
+      if (this.gameData.gameStatusText === "Final") {
+        visitorTeam = `${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][0]} (${this.gameData.awayTeam.wins}-${this.gameData.awayTeam.losses})`
+        homeTeam = `${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][0]} (${this.gameData.homeTeam.wins}-${this.gameData.homeTeam.losses})`
+      } else if ((vTeamScore > hTeamScore) && (parseInt(this.gameData.awayTeam.periods.length) >= 4)) {
+        visitorTeam = `${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][0]} (${parseInt(this.gameData.awayTeam.wins) + 1}-${this.gameData.awayTeam.losses})`
+        homeTeam = `${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][0]} (${this.gameData.homeTeam.wins}-${parseInt(this.gameData.homeTeam.losses) + 1})`
+      } else if ((vTeamScore < hTeamScore) && (parseInt(this.gameData.awayTeam.periods.length) >= 4)) {
+        visitorTeam = `${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][0]} (${this.gameData.awayTeam.wins}-${parseInt(this.gameData.awayTeam.losses) + 1})`
+        homeTeam = `${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][0]} (${parseInt(this.gameData.homeTeam.wins) + 1}-${this.gameData.homeTeam.losses})`
       }
 
-      if ((vTeamScore > hTeamScore) && (parseInt(basicData.vTeam.linescore.length) === 4)) {
+      if ((vTeamScore > hTeamScore) && (parseInt(this.gameData.awayTeam.periods.length) === 4)) {
         title = title + `${visitorTeam} defeat the ${homeTeam}, ${vTeamScore} - ${hTeamScore}`
-      } else if ((vTeamScore > hTeamScore) && (parseInt(basicData.vTeam.linescore.length) === 5)) {
+      } else if ((vTeamScore > hTeamScore) && (parseInt(this.gameData.awayTeam.periods.length) === 5)) {
         title = title + `${visitorTeam} defeat the ${homeTeam} in OT, ${vTeamScore} - ${hTeamScore}`
-      } else if ((vTeamScore > hTeamScore) && (basicData.vTeam.linescore.length > 5)) {
-        title = title + `${visitorTeam} defeat the ${homeTeam} in ${basicData.vTeam.linescore.length - 4} OT, ${vTeamScore} - ${hTeamScore}`
-      } else if ((vTeamScore < hTeamScore) && (parseInt(basicData.vTeam.linescore.length) === 4)) {
+      } else if ((vTeamScore > hTeamScore) && (this.gameData.awayTeam.periods.length > 5)) {
+        title = title + `${visitorTeam} defeat the ${homeTeam} in ${this.gameData.awayTeam.periods.length - 4}OT, ${vTeamScore} - ${hTeamScore}`
+      } else if ((vTeamScore < hTeamScore) && (parseInt(this.gameData.awayTeam.periods.length) === 4)) {
         title = title + `${homeTeam} defeat the ${visitorTeam}, ${hTeamScore} - ${vTeamScore}`
-      } else if ((vTeamScore < hTeamScore) && (parseInt(basicData.vTeam.linescore.length) === 5)) {
+      } else if ((vTeamScore < hTeamScore) && (parseInt(this.gameData.awayTeam.periods.length) === 5)) {
         title = title + `${homeTeam} defeat the ${visitorTeam} in OT, ${hTeamScore} - ${vTeamScore}`
-      } else if ((vTeamScore < hTeamScore) && (parseInt(basicData.vTeam.linescore.length) > 5)) {
-        title = title + `${homeTeam} defeat the ${visitorTeam} in ${basicData.vTeam.linescore.length - 4} OT, ${hTeamScore} - ${vTeamScore}`
+      } else if ((vTeamScore < hTeamScore) && (parseInt(this.gameData.awayTeam.periods.length) > 5)) {
+        title = title + `${homeTeam} defeat the ${visitorTeam} in ${this.gameData.awayTeam.periods.length - 4}OT, ${hTeamScore} - ${vTeamScore}`
       }
       return title
     },
@@ -156,10 +152,10 @@ return body
       return `https://www.reddit.com/r/nba/submit?title=${encodeURIComponent(this.computeRedditTitle)}&text=${encodeURIComponent(this.computeRedditBoxscore)}`
     },
     vTeamSubmissionUrl () {
-      return `https://www.reddit.com/r/${this.$store.getters.teamsData[this.gameData.basicGameData.vTeam.triCode][6]}/submit?title=${encodeURIComponent(this.computeRedditTitle)}&text=${encodeURIComponent(this.computeRedditBoxscore)}`
+      return `https://www.reddit.com/r/${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][6]}/submit?title=${encodeURIComponent(this.computeRedditTitle)}&text=${encodeURIComponent(this.computeRedditBoxscore)}`
     },
     hTeamSubmissionUrl () {
-      return `https://www.reddit.com/r/${this.$store.getters.teamsData[this.gameData.basicGameData.hTeam.triCode][6]}/submit?title=${encodeURIComponent(this.computeRedditTitle)}&text=${encodeURIComponent(this.computeRedditBoxscore)}`
+      return `https://www.reddit.com/r/${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][6]}/submit?title=${encodeURIComponent(this.computeRedditTitle)}&text=${encodeURIComponent(this.computeRedditBoxscore)}`
     }
 
   },
