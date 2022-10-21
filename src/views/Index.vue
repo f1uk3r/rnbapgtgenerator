@@ -2,7 +2,7 @@
   <div>
     <b-tabs v-model="activeTab">
       <b-tab-item label="Today's Games">
-        <router-link :to="{ name: 'Games', params: { id: '0022200016', date: $store.getters.dateToday }}" v-for="game in scoreboardData.games" :key="game.gameId" >
+        <router-link :to="{ name: 'Games', params: { id: game.gameId, date: $store.getters.dateToday }}" v-for="game in scoreboardData.games" :key="game.gameId" >
           <IndexCard :gameData="game" />
         </router-link>
       </b-tab-item>

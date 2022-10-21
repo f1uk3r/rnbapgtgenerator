@@ -27,12 +27,12 @@ export default {
   },
   computed: {
     computeRedditBoxscore () {
-      const nbaMatchupUrlString = `${basicData.vTeam.triCode.toLowerCase()}-vs-${basicData.hTeam.triCode.toLowerCase()}-${basicData.gameId}/box-score#box-score`;
+      const nbaMatchupUrlString = `${this.gameData.awayTeam.teamTricode.toLowerCase()}-vs-${this.gameData.homeTeam.teamTricode.toLowerCase()}-${this.gameData.gameId}/box-score#box-score`;
       let body = `
 ||		
 |:-:|		
 |[](/${this.gameData.awayTeam.teamTricode}) **${this.gameData.awayTeam.score} -  ${this.gameData.homeTeam.score}** [](/${this.gameData.homeTeam.teamTricode})|
-|**Box Scores: [NBA](http://www.nba.com/game/${nbaMatchupUrlString}) & [Yahoo](http://sports.yahoo.com/nba/${this.$store.getters.teamsData[basicData.vTeam.triCode][2]}${this.$store.getters.teamsData[basicData.hTeam.triCode][2]}${this.$store.getters.dateToday}${this.$store.getters.teamsData[basicData.hTeam.triCode][1]})**|
+|**Box Scores: [NBA](http://www.nba.com/game/${nbaMatchupUrlString}) & [Yahoo](http://sports.yahoo.com/nba/${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][2]}${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][2]}${this.$store.getters.dateToday}${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][1]})**|
 
 
 ||
@@ -95,18 +95,18 @@ export default {
 **[](/${this.gameData.awayTeam.teamTricode}) ${this.$store.getters.teamsData[this.gameData.awayTeam.teamTricode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n`
       for (let i = 0; i < this.gameData.awayTeam.players.length; i++) {
         const playerStat = this.gameData.awayTeam.players[i]
-        if (playerStat.position !== "") {
+        if (playerStat.position) {
           body = body + `|${playerStat.name}^${playerStat.position}|${playerStat.statistics.minutesCalculated}|${playerStat.statistics.points}|${playerStat.statistics.fieldGoalsMade}-${playerStat.statistics.fieldGoalsAttempted}|${playerStat.statistics.threePointersMade}-${playerStat.statistics.threePointersAttempted}|${playerStat.statistics.freeThrowsMade}-${playerStat.statistics.freeThrowsAttempted}|${playerStat.statistics.reboundsOffensive}|${playerStat.statistics.reboundsDefensive}|${playerStat.statistics.reboundsTotal}|${playerStat.statistics.assists}|${playerStat.statistics.steals}|${playerStat.statistics.blocks}|${playerStat.statistics.turnovers}|${playerStat.statistics.foulsPersonal}|${this.apendPlusMinus(playerStat.statistics.plusMinusPoints)}|\n`
-        } else if (playerStat.position === "") {
+        } else {
           body = body + `|${playerStat.name}|${playerStat.statistics.minutesCalculated}|${playerStat.statistics.points}|${playerStat.statistics.fieldGoalsMade}-${playerStat.statistics.fieldGoalsAttempted}|${playerStat.statistics.threePointersMade}-${playerStat.statistics.threePointersAttempted}|${playerStat.statistics.freeThrowsMade}-${playerStat.statistics.freeThrowsAttempted}|${playerStat.statistics.reboundsOffensive}|${playerStat.statistics.reboundsDefensive}|${playerStat.statistics.reboundsTotal}|${playerStat.statistics.assists}|${playerStat.statistics.steals}|${playerStat.statistics.blocks}|${playerStat.statistics.turnovers}|${playerStat.statistics.foulsPersonal}|${this.apendPlusMinus(playerStat.statistics.plusMinusPoints)}|\n`
         }
       }
       body = body + `**[](/${this.gameData.homeTeam.teamTricode}) ${this.$store.getters.teamsData[this.gameData.homeTeam.teamTricode][0]}**|**MIN**|**PTS**|**FGM-A**|**3PM-A**|**FTM-A**|**ORB**|**DRB**|**REB**|**AST**|**STL**|**BLK**|**TO**|**PF**|**+/-**|\n`
       for (let i = 0; i <  this.gameData.homeTeam.players.length; i++) {
         const playerStat =  this.gameData.homeTeam.players[i]
-        if (playerStat.position !== "") {
+        if (playerStat.position) {
           body = body + `|${playerStat.name}^${playerStat.position}|${playerStat.statistics.minutesCalculated}|${playerStat.statistics.points}|${playerStat.statistics.fieldGoalsMade}-${playerStat.statistics.fieldGoalsAttempted}|${playerStat.statistics.threePointersMade}-${playerStat.statistics.threePointersAttempted}|${playerStat.statistics.freeThrowsMade}-${playerStat.statistics.freeThrowsAttempted}|${playerStat.statistics.reboundsOffensive}|${playerStat.statistics.reboundsDefensive}|${playerStat.statistics.reboundsTotal}|${playerStat.statistics.assists}|${playerStat.statistics.steals}|${playerStat.statistics.blocks}|${playerStat.statistics.turnovers}|${playerStat.statistics.foulsPersonal}|${this.apendPlusMinus(playerStat.statistics.plusMinusPoints)}|\n`
-        } else if (playerStat.position === "") {
+        } else {
           body = body + `|${playerStat.name}|${playerStat.statistics.minutesCalculated}|${playerStat.statistics.points}|${playerStat.statistics.fieldGoalsMade}-${playerStat.statistics.fieldGoalsAttempted}|${playerStat.statistics.threePointersMade}-${playerStat.statistics.threePointersAttempted}|${playerStat.statistics.freeThrowsMade}-${playerStat.statistics.freeThrowsAttempted}|${playerStat.statistics.reboundsOffensive}|${playerStat.statistics.reboundsDefensive}|${playerStat.statistics.reboundsTotal}|${playerStat.statistics.assists}|${playerStat.statistics.steals}|${playerStat.statistics.blocks}|${playerStat.statistics.turnovers}|${playerStat.statistics.foulsPersonal}|${this.apendPlusMinus(playerStat.statistics.plusMinusPoints)}|\n`
         }
       }
