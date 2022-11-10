@@ -80,10 +80,12 @@ export default {
   computed: {
     calculateDataForTable () {
       let listToReturn = []
+      const minuteRegex = /PT(\d+)M(\d*)(.?\d*)S/
       for (let i = 0; i<this.boxScoreData.length; i++) {
+        const playerMinStat = this.boxScoreData[i].statistics.minutes.match(minuteRegex)
         let tableRow = {
           'player': this.boxScoreData[i].name,
-          'minutes': this.boxScoreData[i].statistics.minutes,
+          'minutes': `${playerMinStat[1]}:${playerMinStat[2]}`,
           'field_goal': `${this.boxScoreData[i].statistics.fieldGoalsMade}-${this.boxScoreData[i].statistics.fieldGoalsAttempted}`,
           '3_point': `${this.boxScoreData[i].statistics.threePointersMade}-${this.boxScoreData[i].statistics.threePointersAttempted}`,
           'free_throw': `${this.boxScoreData[i].statistics.freeThrowsMade}-${this.boxScoreData[i].statistics.freeThrowsAttempted}`,

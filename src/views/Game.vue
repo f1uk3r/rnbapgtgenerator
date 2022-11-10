@@ -112,7 +112,7 @@ export default {
       return this.$store.getters.baseUrl + this.$store.getters.scoreboardSuffix
     },
     getGameUrl () {
-      return this.$store.getters.baseUrl + 'boxscore/boxscore_' + this.$route.params.id + '.json'
+      return this.$store.getters.baseUrl + `${encodeURIComponent('boxscore/boxscore_' + this.$route.params.id + '.json')}`
     },
     hTeamBoxScore () {
       return this.currentGameData.homeTeam.players

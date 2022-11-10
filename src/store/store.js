@@ -281,8 +281,8 @@ export const store = new Vuex.Store({
     dateToday: '',
     // yesterdayLastGameEnd: false,
     todayLastGameEnd: false,
-    baseUrl: 'https://cdn.nba.com/static/json/liveData/',
-    scoreboardSuffix: 'scoreboard/todaysScoreboard_00.json'
+    baseUrl: `https://api.allorigins.win/raw?url=${encodeURIComponent('https://cdn.nba.com/static/json/liveData/')}`,
+    scoreboardSuffix: `${encodeURIComponent('scoreboard/todaysScoreboard_00.json')}`
   },
   getters: {
     teamsData: state => state.teamsData,
