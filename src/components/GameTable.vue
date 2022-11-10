@@ -80,23 +80,25 @@ export default {
   computed: {
     calculateDataForTable () {
       let listToReturn = []
+      const minuteRegex = /PT(\d+)M(\d*)(.?\d*)S/
       for (let i = 0; i<this.boxScoreData.length; i++) {
+        const playerMinStat = this.boxScoreData[i].statistics.minutes.match(minuteRegex)
         let tableRow = {
-          'player': this.boxScoreData[i].firstName + " " + this.boxScoreData[i].lastName,
-          'minutes': this.boxScoreData[i].min,
-          'field_goal': `${this.boxScoreData[i].fgm}-${this.boxScoreData[i].fga}`,
-          '3_point': `${this.boxScoreData[i].tpm}-${this.boxScoreData[i].tpa}`,
-          'free_throw': `${this.boxScoreData[i].ftm}-${this.boxScoreData[i].fta}`,
-          'off_reb': this.boxScoreData[i].offReb,
-          'def_reb': this.boxScoreData[i].defReb,
-          'rebound': this.boxScoreData[i].totReb,
-          'assist': this.boxScoreData[i].assists,
-          'steal': this.boxScoreData[i].steals,
-          'block': this.boxScoreData[i].blocks,
-          'turnover': this.boxScoreData[i].turnovers,
-          'foul': this.boxScoreData[i].pFouls,
-          'plus_minus': this.boxScoreData[i].plusMinus,
-          'point': this.boxScoreData[i].points
+          'player': this.boxScoreData[i].name,
+          'minutes': `${playerMinStat[1]}:${playerMinStat[2]}`,
+          'field_goal': `${this.boxScoreData[i].statistics.fieldGoalsMade}-${this.boxScoreData[i].statistics.fieldGoalsAttempted}`,
+          '3_point': `${this.boxScoreData[i].statistics.threePointersMade}-${this.boxScoreData[i].statistics.threePointersAttempted}`,
+          'free_throw': `${this.boxScoreData[i].statistics.freeThrowsMade}-${this.boxScoreData[i].statistics.freeThrowsAttempted}`,
+          'off_reb': this.boxScoreData[i].statistics.reboundsOffensive,
+          'def_reb': this.boxScoreData[i].statistics.reboundsDefensive,
+          'rebound': this.boxScoreData[i].statistics.reboundsTotal,
+          'assist': this.boxScoreData[i].statistics.assists,
+          'steal': this.boxScoreData[i].statistics.steals,
+          'block': this.boxScoreData[i].statistics.blocks,
+          'turnover': this.boxScoreData[i].statistics.turnovers,
+          'foul': this.boxScoreData[i].statistics.foulsPersonal,
+          'plus_minus': this.boxScoreData[i].statistics.plusMinusPoints,
+          'point': this.boxScoreData[i].statistics.points
         }
         listToReturn.push(tableRow)
       }

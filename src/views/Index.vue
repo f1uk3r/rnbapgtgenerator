@@ -6,11 +6,11 @@
           <IndexCard :gameData="game" />
         </router-link>
       </b-tab-item>
-      <b-tab-item label="Yesterday's Games">
+      <!-- <b-tab-item label="Yesterday's Games">
         <router-link :to="{ name: 'Games', params: { id: game.gameId, date: $store.getters.dateYesterday }}" v-for="game in yesterdayScoreboardData.games" :key="game.gameId" >
           <IndexCard :gameData="game" />
         </router-link>
-      </b-tab-item>
+      </b-tab-item> -->
       <b-tab-item label="About Project">
         <div class="content">
           <h1>Box score generator</h1>
@@ -36,7 +36,7 @@ export default {
   data () {
     return  {
       scoreboardData: null,
-      yesterdayScoreboardData: null,
+      // yesterdayScoreboardData: null,
       activeTab: 0,
       scoreboardInterval: null
     }
@@ -45,24 +45,24 @@ export default {
     ...mapGetters([
       'dateToday',
       'teamsData',
-      'dateYesterday',
-      'yesterdayLastGameEnd'
+      // 'dateYesterday'
+      // 'yesterdayLastGameEnd'
     ]),
     getUrl () {
-      return this.$store.getters.baseUrl + this.$store.getters.dateToday + this.$store.getters.scoreboardSuffix
-    },
-    getYesterdayUrl () {
-      return this.$store.getters.baseUrl + this.$store.getters.dateYesterday + this.$store.getters.scoreboardSuffix
+      return this.$store.getters.baseUrl + this.$store.getters.scoreboardSuffix
     }
+    // getYesterdayUrl () {
+    //   return this.$store.getters.baseUrl + this.$store.getters.scoreboardSuffix
+    // }
   },
   mounted () {
     this.$store.dispatch('initialiseDates')
 
-    this.$store.dispatch('checkYesterdayLastGameEnd')
+    // this.$store.dispatch('checkYesterdayLastGameEnd')
 
     this.getScoreboardData()
 
-    this.getYesterdayScoreboardData()
+    // this.getYesterdayScoreboardData()
   },
   methods: {
     apendPlusMinus (someStat) {
@@ -73,27 +73,27 @@ export default {
       } return someStat
     },
     getScoreboardData () {
-      axios.get(this.getUrl, {crossDomain: true}).then((response) => {
-        this.scoreboardData = response.data
-      })
-    },
-    getYesterdayScoreboardData () {
-      axios.get(this.getYesterdayUrl, {crossDomain: true}).then((response) => {
-        this.yesterdayScoreboardData = response.data
+      axios.get(this.getUrl).then((response) => {
+        this.scoreboardData = response.data.scoreboard
       })
     }
+    // getYesterdayScoreboardData () {
+    //   axios.get(this.getYesterdayUrl, {crossDomain: true}).then((response) => {
+    //     this.yesterdayScoreboardData = response.data
+    //   })
+    // }
   },
   created () {
     this.scoreboardInterval = setInterval(() => {
       this.getScoreboardData()
-    }, 5000),
-    this.yesterdayScoreboardInterval = setInterval(() => {
-      this.getYesterdayScoreboardData()
-    }, 5000)
+    }, 50000)
+    // this.yesterdayScoreboardInterval = setInterval(() => {
+    //   this.getYesterdayScoreboardData()
+    // }, 5000)
   },
   destroyed () {
     clearInterval(this.scoreboardInterval)
-    clearInterval(this.yesterdayScoreboardInterval)
+    // clearInterval(this.yesterdayScoreboardInterval)
   }
 }
 </script>
